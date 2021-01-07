@@ -1,6 +1,6 @@
 ;
 (function() {
-    let version = "1.0";
+    let version = "1.1";
     let base = "https://cdn.jsdelivr.net/gh/moonlightL/CDN@" + version;
     let APP = {
         theme: "Grace",
