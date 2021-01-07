@@ -1,7 +1,7 @@
 ;
 (function() {
     let version = "1.0";
-    let base = "/theme";
+    let base = "https://cdn.jsdelivr.net/gh/moonlightL/CDN@" + version;
     let APP = {
         theme: "Grace",
         plugins: {
@@ -10,7 +10,7 @@
                 js: base + "/Grace/source/js/APlayer/APlayer.min.js"
             },
             bootstrap: {
-              js: base + "/Grace/source/css/bootstrap/js/bootstrap.min.js"
+                js: base + "/Grace/source/css/bootstrap/js/bootstrap.min.js"
             },
             highlight: {
                 js: base + "/Grace/source/js/highlightjs/highlight.pack.js",
@@ -323,7 +323,7 @@
     };
 
     const pjaxEvent = function() {
-        $(document).pjax('a[data-pjax]', '#wrap', {fragment: '#wrap'});
+        $(document).pjax('a[data-pjax]', '#wrap', {fragment: '#wrap', timeout: 8000});
         $(document).on('pjax:start', function() { NProgress.start(); });
         $(document).on('pjax:end',   function(e) {
             loadLazy();
