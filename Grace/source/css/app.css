@@ -322,7 +322,6 @@ html {
 .header {
     margin-bottom: 2rem;
     object-fit: cover;
-    height: 30rem;
     border: none;
 }
 
@@ -2353,15 +2352,6 @@ nav.navBar.show ul.menu li.current > i {
     padding: 0 3px;
 }
 
-.aplayer {
-    position: fixed;
-    right: 11rem;
-    bottom: -3rem;
-    transition: all .6s;
-    opacity: 0!important;
-}
-
 .aplayer.show {
-    bottom: 1rem;
     opacity: 1!important;
 }

@@ -187,11 +187,9 @@
 
     const loadLazy = function() {
         $.getScript(APP.plugins.lazyLoad.js, function() {
-            $("img.lazy").lazyload({
-                placeholder : "/theme/Grace/source/images/loading.gif",
-                effect: "fadeIn",
-                threshold: 10,
-                container: $("body")
+            $("img.lazyload").lazyload({
+                placeholder : base + "/Grace/source/images/loading.gif",
+                effect: "fadeIn"
             });
         })
     };
