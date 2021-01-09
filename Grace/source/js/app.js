@@ -1,6 +1,6 @@
 ;
 (function() {
-    let version = "1.1";
+    let version = "1.2";
     let base = "https://cdn.jsdelivr.net/gh/moonlightL/CDN@" + version;
     let APP = {
         theme: "Grace",
@@ -188,7 +188,7 @@
     const loadLazy = function() {
         $.getScript(APP.plugins.lazyLoad.js, function() {
             $("img.lazyload").lazyload({
-                placeholder : base + "/Grace/source/images/loading.gif",
+                placeholder : base + "/Grace/source/images/loading.jpg",
                 effect: "fadeIn"
             });
         })
