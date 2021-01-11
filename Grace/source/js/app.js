@@ -1,33 +1,30 @@
 ;
 (function() {
-    let version = "1.2";
-    let base = "https://cdn.jsdelivr.net/gh/moonlightL/CDN@" + version;
     let APP = {
-        theme: "Grace",
         plugins: {
             APlayer: {
-                css: base + "/Grace/source/js/APlayer/APlayer.min.css",
-                js: base + "/Grace/source/js/APlayer/APlayer.min.js"
+                css: baseLink + "/source/js/APlayer/APlayer.min.css",
+                js: baseLink + "/source/js/APlayer/APlayer.min.js"
             },
             bootstrap: {
-                js: base + "/Grace/source/css/bootstrap/js/bootstrap.min.js"
+              js: baseLink + "/source/css/bootstrap/js/bootstrap.min.js"
             },
             highlight: {
-                js: base + "/Grace/source/js/highlightjs/highlight.pack.js",
+                js: baseLink + "/source/js/highlightjs/highlight.pack.js",
             },
             lazyLoad: {
-                js: base + "/Grace/source/js/jquery.lazyload.min.js"
+                js: baseLink + "/source/js/jquery.lazyload.min.js"
             },
             toc: {
-                js: base + "/Grace/source/js/toc.js"
+                js: baseLink + "/source/js/toc.js"
             },
             wayPoints: {
-                js: base + "/Grace/source/js/jquery.waypoints.min.js"
+                js: baseLink + "/source/js/jquery.waypoints.min.js"
             }
         }
     };
 
-    console.log("%c Theme." + APP.theme + " v" + version + " %c https://www.extlight.com/ ", "color: white; background: #e9546b; padding:5px 0;", "padding:4px;border:1px solid #e9546b;");
+    console.log("%c Theme." + themeName + " v" + version + " %c https://www.extlight.com/ ", "color: white; background: #e9546b; padding:5px 0;", "padding:4px;border:1px solid #e9546b;");
 
     const loadResource = function() {
         let APlayer = APP.plugins.APlayer;
@@ -89,7 +86,7 @@
             }
 
             $aplayer.toggleClass("show");
-            const ap = new APlayer({
+            new APlayer({
                 container: $aplayer.get(0),
                 fixed: true,
                 listFolded: true,
@@ -164,7 +161,7 @@
         } else {
             navBar.removeClass("show");
         }
-    };
+    }
 
     const menuToggleEvent = function() {
         $("#menuToggle").off("click").on("click", function() {
@@ -188,7 +185,7 @@
     const loadLazy = function() {
         $.getScript(APP.plugins.lazyLoad.js, function() {
             $("img.lazyload").lazyload({
-                placeholder : base + "/Grace/source/images/loading.jpg",
+                placeholder : baseLink + "/source/images/loading.jpg",
                 effect: "fadeIn"
             });
         })
@@ -243,7 +240,6 @@
     const sidebarEvent = function() {
         $.getScript(APP.plugins.bootstrap.js, function() {
             let $sidebar = $("#sidebar");
-            // 固定位置
             $sidebar.affix({ offset: 480});
             $sidebar.find("li.tab-item").off("click").on("click", function() {
                 if ($(this).hasClass("active")) {
@@ -260,14 +256,6 @@
                 panelItems.removeClass("active");
                 $(panelItems.get(index)).addClass("active");
             });
-        });
-    };
-
-    const copyEvent = function() {
-        let clipboard = new ClipboardJS('.info-btn');
-        clipboard.on('success', function(e) {
-            layer.msg("复制成功");
-            e.clearSelection();
         });
     };
 
@@ -300,15 +288,39 @@
         });
     };
 
+    const praiseEvent = function() {
+        $("#priseBtn").on("click",function () {
+            let postId = $(this).data("postId");
+            if (sessionStorage.getItem("hasPrize" + postId)) {
+                layer.msg("已点赞,请勿频繁操作");
+                return;
+            }
+
+            $.post("/praisePost/" + postId, null, function (resp) {
+                if (resp.success) {
+                    layer.msg("点赞成功");
+                    $("#prizeNum").text(resp.data);
+                    sessionStorage.setItem("hasPrize" + postId, "y");
+                }
+            },"json");
+        });
+    };
+
+    const copyEvent = function() {
+        let clipboard = new ClipboardJS('.info-btn');
+        clipboard.on('success', function(e) {
+            layer.msg("复制成功");
+            e.clearSelection();
+        });
+    };
+
     const postEvent = function() {
         let $postDetail = $(".post-detail");
         if ($postDetail.length > 0) {
-            // 生成目录
             $.getScript(APP.plugins.toc.js, function () {
                 $(".post-toc").html(tocHelper("nav"));
             });
 
-            // 代码高亮
             $.getScript(APP.plugins.highlight.js, function () {
                 document.querySelectorAll('figure span').forEach((block) => {
                     hljs.highlightBlock(block);
@@ -317,19 +329,19 @@
 
             sidebarEvent();
             rewardEvent();
+            praiseEvent();
         }
     };
 
     const pjaxEvent = function() {
         $(document).pjax('a[data-pjax]', '#wrap', {fragment: '#wrap', timeout: 8000});
         $(document).on('pjax:start', function() { NProgress.start(); });
-        $(document).on('pjax:end',   function(e) {
+        $(document).on('pjax:end',   function() {
             loadLazy();
             contentWayPoint();
             postEvent();
             $.getScript("//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js");
 
-            // 导航状态
             let $navBar = $("#navBar");
             let $arr = $navBar.find("ul.menu>li");
             $arr.removeClass("current");
