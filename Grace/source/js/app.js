@@ -234,7 +234,6 @@
         $("#searchBtn").off("click").on("click", function() {
             $('#modal-iframe').iziModal('open');
         });
-
     };
 
     const sidebarEvent = function() {

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh" mode="light" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <div th:replace="~{theme/Grace/common :: link}"></div>
+    <meta name="keywords" th:content="${#servletContext.getAttribute('configMap')['keywords']}" />
+    <meta name="description" th:content="${#servletContext.getAttribute('configMap')['description']}" />
+    <title>文章列表 | [[${#servletContext.getAttribute('configMap')['blog_name']}]]</title>
+</head>
+
+<body>
+<!-- 导航 -->
+<div th:replace="~{theme/Grace/common :: nav}"></div>
+    <div class="wrap" id="wrap">
+        <!-- 头部 -->
+        <header class="header">
+            <!-- 封面 -->
+            <div class="cover">
+                <img class="lazyload" th:data-original="@{${prefix} + '/source/images/postList.png'}">
+            </div>
+
+            <!-- 商标 -->
+            <div class="brand animate-box" data-animate-effect="fadeIn">
+                <p class="title">文章列表</p>
+                <p class="sub-title">
+                    [[${type}]]: [[${name}]]
+                </p>
+            </div>
+        </header>
+        <!-- 主要内容 -->
+        <main class="main">
+            <div class="container">
+                <div class="posts-nav">
+                    <span>当前位置: <a data-pjax th:href="@{/}">首页</a> / <a data-pjax th:href="@{'/' + ${link} + '/'}">[[${type}]]</a> / [[${name}]]</span>
+                </div>
+                <div class="posts-article">
+                    <article class="post-item animate-box" th:each="post,iterStat : ${pageInfo.list}">
+                        <div class="row">
+                            <div class="col-md-2 col-sm-2 hidden-xs">
+                                <div class="cover">
+                                    <img class="lazyload" th:data-original="@{${post.coverUrl}}">
+                                    <div class="meta">
+                                        <div class="read-num"><i class="fa fa-eye"></i> <span class="pull-right">[[${post.readNum}]]</span></div>
+                                        <div class="praise-num"><i class="fa fa-heart"></i><span class="pull-right">[[${post.praiseNum}]]</span></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-10 col-sm-10 col-xs-12">
+                                    <div class="info">
+                                        <h3><a data-pjax th:href="@{'/'+${post.link}}">[[${post.title}]]</a></h3>
+                                        <div class="date hidden-xs">
+                                            <i class="fa fa-clock-o"></i><span> [[${post.year} + '-' + ${post.month} + '-' + ${post.day}]]</span>
+                                        </div>
+                                        <div class="summary">[[${post.summary}]]</div>
+                                    </div>
+                                    <a data-pjax th:href="@{'/'+${post.link}}" class="btn pull-right">
+                                        <i class="fa fa-ellipsis-h fa-2x"></i>
+                                    </a>
+                            </div>
+                        </div>
+                    </article>
+
+                </div>
+
+                <div class="pagination animate-box">
+                    <span th:if="${pageInfo.hasPreviousPage}" class="page">
+                        <a data-pjax class="prev page-numbers" th:href="@{${pageInfo.pageNum-1} == 1 ? '/' + ${link} + '/' + ${name} + '/': '/' + ${link} + '/' + ${name} + '/page/' + ${pageInfo.pageNum-1}+'/'}" ><i class="fa fa-angle-left"></i></a>
+                    </span>
+                    <span th:each="pageNum : ${pageInfo.navigatepageNums}">
+                        <span th:if="${pageNum == pageInfo.pageNum}"  class="page current" th:text="${pageNum}"></span>
+                        <span class="page" th:if="${pageNum != pageInfo.pageNum}">
+                            <a data-pjax th:href="@{${pageNum} == 1 ? '/' + ${link} + '/' + ${name} + '/': '/' + ${link} + '/' + ${name} + '/page/' + ${pageNum}+'/'}" th:text="${pageNum}"></a>
+                        </span>
+                    </span>
+                    <span th:if="${pageInfo.hasNextPage}" class="page">
+                        <a data-pjax class="next page-numbers" th:href="@{'/' + ${link} + '/' + ${name} + '/page/' +  ${pageInfo.pageNum+1}+'/'}" ><i class="fa fa-angle-right"></i></a>
+                    </span>
+                </div>
+
+            </div>
+        </main>
+    </div>
+    <!-- 尾部 -->
+    <div th:replace="~{theme/Grace/common :: footer}"></div>
+    <div th:replace="~{theme/Grace/common :: script}"></div>
+</body>
+
+</html>

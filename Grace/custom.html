@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="zh" mode="light" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <div th:replace="~{theme/Grace/common :: link}"></div>
+    <meta name="keywords" th:content="${#servletContext.getAttribute('configMap')['keywords']}" />
+    <meta name="description" th:content="${#servletContext.getAttribute('configMap')['description']}" />
+    <title>[[${currentNav.name}]] | [[${#servletContext.getAttribute('configMap')['blog_name']}]]</title>
+</head>
+
+<body>
+<!-- 导航 -->
+<div th:replace="~{theme/Grace/common :: nav}"></div>
+<div class="wrap" id="wrap">
+    <!-- 头部 -->
+    <header class="header">
+        <!-- 封面 -->
+        <div class="cover">
+            <span th:if="${#strings.startsWith(currentNav.cover,'http')}">
+                <img class="lazyload" th:data-original="@{${currentNav.cover}}">
+            </span>
+            <span th:if="${#strings.startsWith(currentNav.cover,'http') == false}">
+                <img class="lazyload" th:data-original="@{${prefix} + '/source/images/custom.png'}">
+            </span>
+        </div>
+
+        <!-- 商标 -->
+        <div class="brand animate-box" data-animate-effect="fadeIn">
+            <p class="title">[[${currentNav.name}]]</p>
+            <p class="sub-title"></p>
+        </div>
+    </header>
+    <!-- 主要内容 -->
+    <main class="main">
+        <div class="container">
+            <div class="custom-page-detail">
+                <div class="custom-page-content"  th:utext="${md.md2html(#objects.nullSafe(currentNav.content, ''))}"></div>
+                <hr>
+            </div>
+
+            <!-- 评论 -->
+            <div th:replace="~{theme/Grace/common :: comment}"></div>
+        </div>
+    </main>
+</div>
+<!-- 尾部 -->
+<div th:replace="~{theme/Grace/common :: footer}"></div>
+<div th:replace="~{theme/Grace/common :: script}"></div>
+</body>
+
+</html>
