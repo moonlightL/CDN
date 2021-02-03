@@ -10,7 +10,7 @@
               js: baseLink + "/source/css/bootstrap/js/bootstrap.min.js"
             },
             highlight: {
-                js: baseLink + "/source/js/highlightjs/highlight.pack.js",
+                js: baseLink + "/source/js/highlightjs/highlight.pack.js"
             },
             lazyLoad: {
                 js: baseLink + "/source/js/jquery.lazyload.min.js"
@@ -52,22 +52,23 @@
     const optionEvent = function() {
         let body = $("body");
 
-        let $options = $('<div class="options animated fadeInLeft" id="option"> <i class="fa fa-cog fa-2x faa-spin animated"></i> </div>');
+        let $options = $('<div class="options animated fadeInRight" id="option"> <i class="fa fa-cog fa-2x faa-spin animated"></i> </div>');
         body.append($options);
 
         let elements = [
-            {"title": "up", "icon": "fa fa-arrow-up"},
-            {"title": "change-mode", "icon": "fa fa-adjust"},
-            {"title": "music", "icon": "fa fa-music"},
+            {"class": "up", "icon": "fa fa-arrow-up", "title": "回到顶部"},
+            {"class": "change-mode", "icon": "fa fa-adjust", "title": "黑白模式"},
+            {"class": "music", "icon": "fa fa-music", "title": "播放音乐"},
         ];
 
         let htmArr = [];
         for (let i = 0; i < elements.length; i++) {
             let ele = elements[i];
-            htmArr.push('<div class="option-item '+ ele.title +'"> <i class="' + ele.icon+'"></i> </div> ');
+            htmArr.push('<div class="option-item '+ ele.class +'" title="'+ ele.title +'"> <i class="' + ele.icon+'"></i> </div> ');
         }
 
         body.append(htmArr.join(""));
+
         $("#option").off("click").on("click", function() {
             $(this).siblings(".option-item").toggleClass("show");
         });
@@ -78,6 +79,18 @@
             }, 500);
         });
 
+        $(".change-mode").off("click").on("click", function () {
+            let $html = $("html");
+            let mode = ($html.attr("mode") === "light" ? "dark" : "light");
+            sessionStorage.setItem(CURRENT_MODE, mode);
+            $html.attr("mode", mode);
+            if (mode === "light") {
+                $("#modeBtn").html('<i class="fa fa-moon-o"></i>');
+            } else {
+                $("#modeBtn").html('<i class="fa fa-sun-o"></i>');
+            }
+        });
+
         $(".music").off("click").on("click", function() {
             let $aplayer = $("#aplayer");
             if ($aplayer.hasClass("inited")) {
@@ -85,32 +98,30 @@
                 return;
             }
 
-            $aplayer.toggleClass("show");
-            new APlayer({
-                container: $aplayer.get(0),
-                fixed: true,
-                listFolded: true,
-                listMaxHeight: 90,
-                lrcType: 3,
-                audio: [
-                    {
-                        name: 'China',
-                        artist: '徐梦圆',
-                        url: 'https://images.extlight.com/China.mp3',
-                        cover: 'http://p2.music.126.net/h_jIa6jZSuI8gBW6a89Dhg==/16667496765602378.jpg?param=130y130',
-                        theme: '#ebd0c2'
-                    },
-                    {
-                        name: 'Love Heart',
-                        artist: '未知',
-                        url: 'https://images.extlight.com/%CA%9F%E1%B4%8F%E1%B4%A0%E1%B4%87_%CA%9C%E1%B4%87%E1%B4%80%CA%80%E1%B4%9B.mp3',
-                        cover: 'http://p2.music.126.net/h_jIa6jZSuI8gBW6a89Dhg==/16667496765602378.jpg?param=130y130',
-                        theme: '#ebd0c2'
+            $.ajax({
+                url: "/musicList.json",
+                type: "GET",
+                dataType: "JSON",
+                success: function (resp) {
+                    if (resp.success) {
+                        if (resp.data.length === 0) {
+                            layer.msg("博主未上传音乐资源");
+                            return;
+                        }
+                        $aplayer.toggleClass("show");
+                        new APlayer({
+                            container: $aplayer.get(0),
+                            fixed: true,
+                            listFolded: true,
+                            listMaxHeight: 90,
+                            audio: resp.data
+                        });
+                        $aplayer.addClass("inited");
+                    } else {
+                        layer.msg("加载数据异常");
                     }
-                ]
+                }
             });
-
-            $aplayer.addClass("inited");
         });
 
     };
@@ -125,18 +136,6 @@
                 $(this).html("<i class='fa fa-moon-o'></i>");
             } else {
                 $(this).html("<i class='fa fa-sun-o'></i>");
-            }
-        });
-
-        $(".change-mode").off("click").on("click", function () {
-            let $html = $("html");
-            let mode = ($html.attr("mode") === "light" ? "dark" : "light");
-            sessionStorage.setItem(CURRENT_MODE, mode);
-            $html.attr("mode", mode);
-            if (mode === "light") {
-                $("#modeBtn").html('<i class="fa fa-moon-o"></i>');
-            } else {
-                $("#modeBtn").html('<i class="fa fa-sun-o"></i>');
             }
         });
 
@@ -224,7 +223,7 @@
 
         $("#modal-iframe").iziModal({
             iframe: true,
-            headerColor: "rgb(76, 175, 80)",
+            headerColor: "rgb(78,122,177)",
             title: '<i class="fa fa-search"></i> 站内搜索' ,
             width: 620,
             iframeHeight: 360,
@@ -334,8 +333,8 @@
 
     const pjaxEvent = function() {
         $(document).pjax('a[data-pjax]', '#wrap', {fragment: '#wrap', timeout: 8000});
-        $(document).on('pjax:start', function() { NProgress.start(); });
-        $(document).on('pjax:end',   function() {
+        $(document).on('pjax:send', function() { NProgress.start(); });
+        $(document).on('pjax:complete',   function(e) {
             loadLazy();
             contentWayPoint();
             postEvent();

@@ -1,132 +1,4 @@
-a,
-abbr,
-acronym,
-address,
-applet,
-article,
-aside,
-audio,
-b,
-big,
-blockquote,
-body,
-canvas,
-caption,
-center,
-cite,
-code,
-dd,
-del,
-details,
-dfn,
-div,
-dl,
-dt,
-em,
-embed,
-fieldset,
-figcaption,
-figure,
-footer,
-form,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-header,
-hgroup,
-html,
-i,
-iframe,
-img,
-ins,
-kbd,
-label,
-legend,
-li,
-mark,
-menu,
-nav,
-object,
-ol,
-output,
-p,
-pre,
-q,
-ruby,
-s,
-samp,
-section,
-small,
-span,
-strike,
-strong,
-sub,
-summary,
-sup,
-table,
-tbody,
-td,
-tfoot,
-th,
-thead,
-time,
-tr,
-tt,
-u,
-ul,
-var,
-video {
-    margin: 0;
-    padding: 0;
-    border: 0;
-    font-size: 100%;
-    font: inherit;
-    vertical-align: baseline
-}
-
-article,
-aside,
-details,
-figcaption,
-figure,
-footer,
-header,
-hgroup,
-menu,
-nav,
-section {
-    display: block
-}
-
-body {
-    line-height: 1
-}
-
-ol,
-ul {
-    list-style: none
-}
-
-blockquote,
-q {
-    quotes: none
-}
-
-blockquote:after,
-blockquote:before,
-q:after,
-q:before {
-    content: '';
-    content: none
-}
-
-table {
-    border-collapse: collapse;
-    border-spacing: 0
-}
+a, abbr, acronym, address, applet, article, aside, audio, b, big, blockquote, body, canvas, caption, center, cite, code, dd, del, details, dfn, div, dl, dt, em, embed, fieldset, figcaption, figure, footer, form, h1, h2, h3, h4, h5, h6, header, hgroup, html, i, iframe, img, ins, kbd, label, legend, li, mark, menu, nav, object, ol, output, p, pre, q, ruby, s, samp, section, small, span, strike, strong, sub, summary, sup, table, tbody, td, tfoot, th, thead, time, tr, tt, u, ul, var, video {margin: 0; padding: 0; border: 0; font-size: 100%; font: inherit; vertical-align: baseline } article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {display: block } body {line-height: 1 } ol, ul {list-style: none } blockquote, q {quotes: none } blockquote:after, blockquote:before, q:after, q:before {content: ''; content: none } table {border-collapse: collapse; border-spacing: 0 }
 
 :root {
     --theme-red: #ffb6b9;
@@ -141,11 +13,11 @@ table {
 }
 
 :root[mode=light] {
-    --background-color: #f2f3f5;
-    --panel-color: #fff;
+    --background-color: #fff;
+    --panel-color: #f2f3f5;
     --primary-color: #415678;
     --text-color: #333;
-    --shadow-color: #ccc;
+    --shadow-color: #a7a4a4;
     --shadow-hover-color: #d0cfcf;
     --link-hover-color: #7489ab;
     --brightness-value: brightness(1)
@@ -153,10 +25,10 @@ table {
 
 :root[mode=dark] {
     --background-color: #0c0c0c;
-    --panel-color: #0e0f10;
+    --panel-color: #24282b;
     --primary-color: #fdbc40;
     --text-color: #d8d8d8;
-    --shadow-color: #333;
+    --shadow-color: #5f5d5d;
     --shadow-hover-color: #484646;
     --link-hover-color: #fbc969;
     --brightness-value: brightness(0.7)
@@ -198,7 +70,7 @@ p {
     font-family: Poppins, "Open sans", sans-serif;
     margin: 1rem auto;
     text-indent: 0;
-    letter-spacing: 1px
+    letter-spacing: 1px;
 }
 
 .visible {
@@ -260,10 +132,6 @@ p {
     }
 }
 
-html {
-    filter: var(--brightness-value)
-}
-
 body {
     line-height: 2;
     background: var(--background-color);
@@ -277,15 +145,15 @@ body::-webkit-scrollbar {
     width: 8px;
     height: 0;
     background: #ccc;
-    border-radius: 10px
+    border-radius: 4px
 }
 
 body::-webkit-scrollbar-thumb {
     display: block;
     width: 8px;
     margin: 0 auto;
-    border-radius: 10px;
-    background: #aaa
+    border-radius: 4px;
+    background: var(--primary-color);
 }
 
 ::selection {
@@ -299,13 +167,14 @@ body::-webkit-scrollbar-thumb {
 }
 
 .wrap {
-    position: relative
+    position: relative;
 }
 
 .header {
     margin-bottom: 2rem;
     object-fit: cover;
-    border: none
+    border: none;
+    filter: var(--brightness-value);
 }
 
 .header .cover {
@@ -346,7 +215,7 @@ nav.navBar span.menu-toggle {
 }
 
 nav.navBar.show {
-    background: var(--panel-color);
+    background: var(--background-color);
     box-shadow: 0 1px 10px 2px var(--shadow-color)
 }
 
@@ -467,7 +336,7 @@ nav.navBar ul.tool li a {
     display: inline-block;
     width: 32px;
     height: 32px;
-    background: var(--background-color);
+    background: var(--panel-color);
     border-radius: 50%;
     text-align: center
 }
@@ -618,22 +487,24 @@ nav.navBar.show ul.menu li.current>i {
     font-family: sans-serif;
     font-size: 2.5em;
     line-height: 1.2;
-    animation: slowDown 3s;
-    transition: opacity .2s, slowDown .4s
 }
 
-.header .brand p.title::before {
-    content:'{';
-    position: absolute;
-    top: 0;
-    left: -24px
+.header .brand p.title span.title-head {
+    display: inline-block;
+    animation-delay:2s;
+    animation: slowLeft 3s;
 }
 
-.header .brand p.title::after {
-    content: '}';
-    position: absolute;
-    top: 0;
-    right: -24px
+.header .brand p.title span.title-tail {
+    display: inline-block;
+    animation-delay:2s;
+    animation: slowRight 3s;
+}
+
+@media (max-width:767px) {
+    .header .brand p.title {
+        font-size: 1.5em;
+    }
 }
 
 .header .brand p.sub-title {
@@ -653,6 +524,10 @@ nav.navBar.show ul.menu li.current>i {
     .main .container {
         width: 900px
     }
+}
+
+.main .sticky, .main .posts {
+    filter: var(--brightness-value);
 }
 
 .main .sticky h2 i {
@@ -700,7 +575,9 @@ nav.navBar.show ul.menu li.current>i {
 .main .sticky-article {
     position: relative;
     height: 160px;
-    opacity: 0
+    border-radius: 10px;
+    box-shadow: 0 1px 10px 1px var(--shadow-color);
+    opacity: 0;
 }
 
 @media (max-width:993px) {
@@ -765,11 +642,11 @@ nav.navBar.show ul.menu li.current>i {
 .main .post-article {
     display: flex;
     border-radius: 10px;
-    box-shadow: 0 1px 3px 1px var(--shadow-color);
+    box-shadow: 0 1px 8px 1px var(--shadow-color);
     transition: all .5s;
     height: 260px;
     margin: 1rem 0 2rem 0;
-    background: var(--panel-color);
+    background: var(--background-color);
     opacity: 0
 }
 
@@ -782,7 +659,7 @@ nav.navBar.show ul.menu li.current>i {
 }
 
 .main .post-article:hover {
-    box-shadow: 0 1px 3px 2px var(--shadow-hover-color)
+    box-shadow: 0 1px 10px 6px var(--shadow-hover-color)
 }
 
 .main .post-article .cover {
@@ -809,42 +686,42 @@ nav.navBar.show ul.menu li.current>i {
     width: 100%;
     height: 100%;
     transition: all .2s ease-in-out 0s;
-    overflow: hidden
+    overflow: hidden;
 }
 
 .main .post-article:hover img {
-    transform: scale(1.1)
+    transform: scale(1.05) rotate(1deg);
 }
 
 .main .post-article .info {
     position: relative;
     width: 50%;
     padding: 1rem 1.5rem 3rem 0;
-    perspective: 62.5rem
+    perspective: 62.5rem;
 }
 
 .main .post-article .info span {
-    color: var(--text-color)
+    color: var(--text-color);
 }
 
 @media (max-width:767px) {
     .main .post-article .info {
         width: 100%;
         height: 14rem;
-        padding: 0 1rem 3rem
+        padding: 0 1rem 3rem;
     }
 }
 
 .main .post-article .info .date {
     float: right;
     font-size: 12px;
-    color: #ccc
+    color: #ccc;
 }
 
 .main svg+span {
     display: inline-block;
     margin: 5px;
-    transform: translateY(-4px)
+    transform: translateY(-4px);
 }
 
 .main .post-article .info h3 {
@@ -854,26 +731,26 @@ nav.navBar.show ul.menu li.current>i {
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
-    clear: both
+    clear: both;
 }
 
 .main .post-article .info h3 a:hover {
-    color: var(--orange-color)
+    color: var(--orange-color);
 }
 
 .main .post-article .info a.btn:hover {
-    background: var(--link-hover-color)
+    background: var(--link-hover-color);
 }
 
 .main .post-article .info .summary {
     overflow: hidden;
     text-overflow: ellipsis;
-    max-height: 6rem
+    max-height: 6rem;
 }
 
 .main .post-article .info .meta {
     font-size: 12px;
-    color: #ccc
+    color: #ccc;
 }
 
 .main .post-article .info .btn {
@@ -884,9 +761,8 @@ nav.navBar.show ul.menu li.current>i {
     transform: translateZ(2rem);
     padding: .5rem 1rem;
     border-radius: 1rem 0;
-    color: var(--grey-0);
     background: var(--primary-color);
-    color: #fff
+    color: #fff;
 }
 
 .main .post-article:nth-child(even) {
@@ -939,7 +815,7 @@ nav.navBar.show ul.menu li.current>i {
 
 .main .pagination {
     width: 100%;
-    padding: 1.25rem 3.125rem;
+    padding: 1.25rem 0;
     text-align: center;
     display: inline-block;
     opacity: 0
@@ -951,7 +827,6 @@ nav.navBar.show ul.menu li.current>i {
     height: 48px;
     line-height: 24px;
     margin: 0 .5rem;
-    padding: .75rem;
     position: relative;
     border-radius: 50%;
     transition: all .5s;
@@ -959,7 +834,9 @@ nav.navBar.show ul.menu li.current>i {
 }
 
 .main .pagination .page a {
-    color: #888
+    color: #888;
+    display: block;
+    padding: .75rem;
 }
 
 .main .pagination .page:hover {
@@ -971,8 +848,13 @@ nav.navBar.show ul.menu li.current>i {
 }
 
 .main .pagination span.current {
+    padding: .75rem;
     background: var(--primary-color);
     color: #fff
+}
+
+.main .pagination span.omit {
+    padding: .75rem;
 }
 
 @media (max-width:767px) {
@@ -990,7 +872,7 @@ nav.navBar.show ul.menu li.current>i {
     text-align: center;
     padding: 2rem 0;
     background: var(--panel-color);
-    border-top: 1px solid var(--shadow-color)
+    border-top: 1px solid var(--shadow-hover-color);
 }
 
 .options {
@@ -1170,11 +1052,11 @@ nav.navBar.show ul.menu li.current>i {
 
 .main .posts-collapse .post-header {
     position: relative;
-    box-shadow: 0 1px 5px 1px var(--shadow-color);
+    box-shadow: 0 1px 7px 1px var(--shadow-color);
     padding: .25rem;
     margin-left: 2rem;
     border-radius: .625rem;
-    background: var(--panel-color);
+    background: var(--background-color);
     animation: slowDown 1s;
     transform-style: preserve-3d;
     transition: ease-in-out .3s
@@ -1280,6 +1162,7 @@ nav.navBar.show ul.menu li.current>i {
 
 .main .category:hover .info {
     opacity: 1;
+    background-color: var(--background-color);
     transform: rotateY(0)
 }
 
@@ -1485,8 +1368,7 @@ nav.navBar.show ul.menu li.current>i {
     position: relative;
     padding: 2rem;
     width: calc(100% - 18rem);
-    background: var(--panel-color);
-    animation: slowRight 2s
+    animation: slowRight 2s;
 }
 
 @media (max-width:991px) {
@@ -1497,7 +1379,8 @@ nav.navBar.show ul.menu li.current>i {
 
 .main .post-content {
     border-radius: 10px;
-    word-break: break-all
+    word-break: break-all;
+    filter: var(--brightness-value);
 }
 
 .main .post-content h2 {
@@ -1508,9 +1391,23 @@ nav.navBar.show ul.menu li.current>i {
     font-size: 24px
 }
 
+.main .post-content a {
+    position: relative;
+    display: inline-block;
+    color: var(--link-hover-color);
+}
+
+.main .post-content a:hover {
+    text-decoration: underline;
+}
+
 .main table,
 .main table thead {
     border-radius: 4px 4px 0 0
+}
+
+.main table.table {
+    box-shadow: 0 1px 10px 1px var(--shadow-color);
 }
 
 .main table th:first-child {
@@ -1526,16 +1423,13 @@ nav.navBar.show ul.menu li.current>i {
     color: #fff
 }
 
-.main table tbody {
-    border: 1px solid #ddd
-}
-
 .main .post-content .highlight {
     position: relative;
     border-radius: 4px;
     font-family: sans-serif;
     background-color: #2d2d2d;
-    padding-top: 24px
+    padding-top: 24px;
+    box-shadow: 0 1px 10px 3px var(--shadow-color);
 }
 
 .main .post-content figure.highlight::before {
@@ -1658,7 +1552,8 @@ nav.navBar.show ul.menu li.current>i {
 }
 
 .main .post-content img {
-    max-width: 100%
+    max-width: 100%;
+    box-shadow: 0 1px 7px 1px var(--shadow-color);
 }
 
 .main ol li,
@@ -1683,7 +1578,8 @@ nav.navBar.show ul.menu li.current>i {
     background-color: var(--theme-red);
     border-radius: 50%;
     text-align: center;
-    transition: all .5s
+    box-shadow: 0 1px 3px 1px var(--theme-red);
+    transition: all .5s;
 }
 
 .main ol li:hover::before {
@@ -1703,7 +1599,8 @@ nav.navBar.show ul.menu li.current>i {
     border: 2px solid var(--theme-red);
     border-radius: 50%;
     text-align: center;
-    transition: all .5s
+    box-shadow: 0 1px 3px 1px var(--theme-red);
+    transition: all .5s;
 }
 
 .main ul li:hover::before {
@@ -1718,7 +1615,7 @@ nav.navBar.show ul.menu li.current>i {
     display: inline-block;
     padding: 0 .75rem;
     border-radius: .3125rem;
-    background: var(--background-color);
+    background: var(--panel-color);
     color: var(--primary-color);
     margin-right: 6px
 }
@@ -1742,11 +1639,13 @@ nav.navBar.show ul.menu li.current>i {
     padding: 1rem;
     border-radius: 50%;
     outline: none;
+    box-shadow: 0 1px 7px 1px var(--shadow-color);
+    transition: all .3s;
 }
 
 .main .post-praise button:hover {
     opacity: .8;
-    box-shadow: 0 1px 7px 1px var(--shadow-hover-color);
+    box-shadow: 0 1px 10px 3px var(--shadow-hover-color);
 }
 
 .main .post-copyright {
@@ -1754,7 +1653,7 @@ nav.navBar.show ul.menu li.current>i {
     padding: 1rem;
     border-left: 2px solid #888;
     border-radius: .625rem;
-    background: var(--background-color);
+    background: var(--panel-color);
     color: var(--text-color)
 }
 
@@ -1763,6 +1662,10 @@ nav.navBar.show ul.menu li.current>i {
     width: 0;
     height: 0;
     border: 0
+}
+
+.main .post-copyright a.alert-link {
+    word-break: break-all;
 }
 
 .main .post-reward {
@@ -1779,12 +1682,14 @@ nav.navBar.show ul.menu li.current>i {
     line-height: 2;
     outline: 0;
     padding: 0 .9375rem;
-    vertical-align: text-top
+    vertical-align: text-top;
+    box-shadow: 0 1px 7px 1px var(--shadow-color);
+    transition: all .3s;
 }
 
 .main .post-reward button:hover {
     opacity: .8;
-    box-shadow: 0 1px 7px 1px var(--shadow-hover-color);
+    box-shadow: 0 1px 10px 3px var(--shadow-hover-color);
 }
 
 .main .post-reward p {
@@ -1911,14 +1816,15 @@ nav.navBar.show ul.menu li.current>i {
     content: "";
     width: 0;
     height: 0;
-    border: 0
+    border: 0;
+    box-shadow: none;
 }
 
 .main .sidebar ul li {
     float: left;
     border-radius: .5rem;
-    padding: 0 1rem;
-    margin-right: 1rem;
+    padding: 0 1.5rem 0 1rem;
+    margin-right: .5rem;
     background: var(--panel-color);
     cursor: pointer
 }
@@ -1989,9 +1895,14 @@ nav.navBar.show ul.menu li.current>i {
     transition-timing-function: ease-in-out;
     transition-delay: 0s;
     transition-property: all;
-    color: #666;
+    color: var(--text-color);
     border-bottom-color: #ccc;
     padding: 0 1rem!important
+}
+
+.post-toc ol a:hover {
+    background-color: var(--primary-color);
+    color: #fff;
 }
 
 .post-toc .nav .nav-child {
@@ -2229,13 +2140,20 @@ nav.navBar.show ul.menu li.current>i {
     align-items: center;
     line-height: 1.5;
     width: calc(50% - 2rem);
+    height: 84px;
     padding: .5rem 1rem;
     margin: 1rem;
     transition: all .2s ease-in-out 0s;
     border-radius: .5rem;
-    border: 1px solid var(--panel-color);
-    box-shadow: 0 1px 3px 1px var(--shadow-color);
-    --bg-color: var(--block-color, #666)
+    background-color: var(--background-color);
+    box-shadow: 0 1px 7px 1px var(--shadow-color);
+    --bg-color: var(--block-color, #666);
+}
+
+@media (max-width:767px) {
+    .main .friend-link .links .item {
+        width: 100%;
+    }
 }
 
 .main .friend-link .links .item:hover {
@@ -2246,7 +2164,7 @@ nav.navBar.show ul.menu li.current>i {
 }
 
 .links .item .image {
-    display: block;
+    display: inline-block;
     width: 64px;
     height: 64px;
     border-radius: 4px;
@@ -2256,6 +2174,7 @@ nav.navBar.show ul.menu li.current>i {
 }
 
 .links .item .info {
+    display: inline-block;
     padding-left: 1rem;
     white-space: nowrap;
     overflow: hidden;
@@ -2264,6 +2183,7 @@ nav.navBar.show ul.menu li.current>i {
 
 .links .item .title {
     margin: .5rem 0;
+    font-size: 18px;
     font-weight: 700
 }
 
@@ -2276,16 +2196,21 @@ nav.navBar.show ul.menu li.current>i {
     margin: .5rem 0
 }
 
+.links .item svg {
+    width: 64px;
+    height: 64px;
+}
+
 .main .about-detail,
 .main .comment-panel {
-    background: var(--panel-color);
+    background: var(--background-color);
     padding: 2rem;
     margin: 2rem 0;
     animation: slowUp 1s
 }
 
 .main .tags-detail {
-    background: var(--panel-color);
+    background: var(--background-color);
     padding: 2rem;
     margin-bottom: 2rem;
     animation: slowUp 1s
@@ -2308,7 +2233,7 @@ nav.navBar.show ul.menu li.current>i {
 }
 
 .main .custom-page-detail {
-    background: var(--panel-color);
+    background: var(--background-color);
     padding: 2rem;
     margin-bottom: 2rem;
     animation: slowUp 1s
@@ -2350,20 +2275,31 @@ nav.navBar.show ul.menu li.current>i {
     border: 2px solid #aaa;
     outline: 0;
     padding-left: 1rem;
-    background: var(--panel-color)
+    background: var(--background-color)
 }
 
 .main .search-query ul {
     width: 100%;
-    padding: .5rem;
-    background: var(--panel-color);
+    background: var(--background-color);
     box-shadow: 0 1px 3px 1px var(--shadow-color)
 }
 
 .main .search-query ul li {
     display: block;
-    padding: .5rem;
-    border-bottom: 1px solid #aaa
+    padding: 1rem;
+    border-bottom: 1px solid #aaa;
+}
+
+.main .search-query ul li:hover {
+    box-shadow: 0 1px 7px 1px var(--shadow-color);
+}
+
+.main .search-query ul li a {
+    display: block;
+}
+
+.main .search-query ul li:hover a {
+    color: var(--primary-color);
 }
 
 .main .search-query mark.highlight {
