@@ -26,6 +26,10 @@
 
     console.log("%c Theme." + themeName + " v" + version + " %c https://www.extlight.com/ ", "color: white; background: #e9546b; padding:5px 0;", "padding:4px;border:1px solid #e9546b;");
 
+    $.ajaxSetup({
+        cache: true
+    });
+
     const loadResource = function() {
         let APlayer = APP.plugins.APlayer;
         $('head').append('<link href="' + APlayer.css + '" rel="stylesheet" type="text/css" />');
@@ -52,7 +56,7 @@
     const optionEvent = function() {
         let body = $("body");
 
-        let $options = $('<div class="options animated fadeInRight" id="option"> <i class="fa fa-cog fa-2x faa-spin animated"></i> </div>');
+        let $options = $('<div class="options animated fadeInRight" id="option"><i class="fa fa-cog fa-2x faa-spin animated"></i></div>');
         body.append($options);
 
         let elements = [
@@ -113,6 +117,7 @@
                             container: $aplayer.get(0),
                             fixed: true,
                             listFolded: true,
+                            autoplay: true,
                             listMaxHeight: 90,
                             audio: resp.data
                         });
@@ -335,6 +340,7 @@
         $(document).pjax('a[data-pjax]', '#wrap', {fragment: '#wrap', timeout: 8000});
         $(document).on('pjax:send', function() { NProgress.start(); });
         $(document).on('pjax:complete',   function(e) {
+            scrollIndicator();
             loadLazy();
             contentWayPoint();
             postEvent();
@@ -349,7 +355,36 @@
         });
     };
 
+    const scrollIndicator = function () {
+        let $window = $(window);
+        let $line = $("#scroll-line");
+        let $left = $(".left");
+        let $right = $(".right");
+        let winTop = $window.scrollTop(), docHeight = $(document).height(), winHeight = $(window).height();
+        calcProcess(winTop, docHeight, winHeight, $line, $left, $right);
+
+        $window.on('scroll', function() {
+            let winTop = $window.scrollTop(), docHeight = $(document).height(), winHeight = $(window).height();
+            calcProcess(winTop, docHeight, winHeight, $line, $left, $right);
+        });
+    };
+
+    function calcProcess(winTop, docHeight, winHeight, line, left, right) {
+        let scrolled =  (winTop / (docHeight - winHeight)) * 100;
+        line.css('width', scrolled + '%');
+        $("#progress-value").html(parseInt(scrolled + "") + '%');
+        let num = scrolled * 3.6;
+        if (scrolled <= 50) {
+            right.css({"transform":"rotate(" + (num - 180) + "deg)"});
+            left.css({"transform":"rotate(-180deg)"});
+        } else {
+            right.css({"transform":"rotate(0deg)"});
+            left.css({"transform":"rotate(" + (num - 360) + "deg)"});
+        }
+    }
+
     $(function() {
+        scrollIndicator();
         themModeEvent();
         optionEvent();
         changeModeEvent();
