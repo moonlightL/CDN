@@ -80,15 +80,9 @@
     --brightness-value: brightness(0.7);
 }
 
-/*html, img {
-    -webkit-filter: grayscale(1);
-    filter: gray;
-    filter: grayscale(1);
-}
-
-html {
-    filter:progid:DXImageTransform.Microsoft.BasicImage(grayscale=1);
-}*/
+/*html {*/
+/*    filter:progid:DXImageTransform.Microsoft.BasicImage(grayscale=1);*/
+/*}*/
 
 body {
     background-color: var(--blog-bg-color);
@@ -167,6 +161,18 @@ strong {
     color: #fff;
     background-color: #30a0dc;
     border-color: #30a0dc;
+}
+
+.btn-success {
+    color: #fff;
+    background-color: #56c356;
+    border-color: #56c356;
+}
+
+.btn-danger {
+    color: #fff;
+    background-color: #e46561;
+    border-color: #e46561;
 }
 
 .form-control {
@@ -395,11 +401,11 @@ strong {
 }
 
 .ml-content-title {
-  margin-bottom:25px;
+    margin-bottom:25px;
 }
 
 .ml-content .post {
-  margin-bottom: 2em;
+    margin-bottom: 2em;
 }
 
 .post-info {
@@ -751,6 +757,7 @@ strong {
 }
 
 .pagination {
+    margin-top: 4rem;
     width: 100%;
     text-align: center;
     display: inline-block;
@@ -871,40 +878,8 @@ span.effect {
 /** 主页 end  */
 
 /** 归档 start **/
-.archive-body {
-    max-width: 800px;
-    margin-left: 35px;
-    position: relative;
-    border-left: 2px solid #cecece;
-}
-
-.archive-body:before {
-    position: absolute;
-    left: -10px;
-    top: 0;
-    content: "";
-    width: 18px;
-    height: 18px;
-    border: 4px solid #daf9f5;
-    border-radius: 50%;
-    background: var(--theme-color);
-}
-
-.archive-body:after {
-    position: absolute;
-    left: -10px;
-    bottom: 0;
-    content: "";
-    width: 18px;
-    height: 18px;
-    border: 4px solid #daf9f5;
-    border-radius: 50%;
-    background: var(--theme-color);
-}
 
 .archive-content h3 {
-    margin-left: 10px;
-    padding-left: 32px;
     padding-bottom: 10px;
     position: relative;
     color: var(--text-color);
@@ -912,14 +887,15 @@ span.effect {
 }
 
 .archives .archives-item {
-    margin-left: 18px;
+    padding: .75rem 0;
+    border-bottom: 1px dashed #aaa;
 }
 
 .archives a {
     position: relative;
     z-index: 1;
     display: inline-block;
-    padding: 10px 24px;
+    padding: 1rem;
     color: var(--text-color);
     font-style: normal;
     text-decoration:none;
@@ -1348,6 +1324,7 @@ h3.friend-link-title {
 .post-other-info a.prev:before {
     position: absolute;
     font-family: FontAwesome;
+    content: "\f0a8";
     left: -10px;
     transform: scale(0);
     transition: all .2s;
@@ -1366,7 +1343,7 @@ h3.friend-link-title {
 .post-other-info a.next:before {
     position: absolute;
     font-family:FontAwesome;
-    content: "\f178";
+    content: "\f0a9";
     right: -10px;
     transform: scale(0);
     transition: all .2s;
@@ -1489,12 +1466,12 @@ h3.friend-link-title {
     }
 
     .footer-copyright {
-      padding: 1.5em 0;
-      text-align:center;
+        padding: 1.5em 0;
+        text-align:center;
     }
 
     header .navbar-header {
-      height: 58px;
+        height: 58px;
     }
 
     .navbar ul.menu > li > ul.second-menu {
@@ -1510,12 +1487,12 @@ h3.friend-link-title {
     }
 
     .footer-copyright span, .footer-copyright a{
-       float: none !important;
-       font-size: 12px;
+        float: none !important;
+        font-size: 12px;
     }
 
     .image-banner img {
-       height: 180px;
+        height: 180px;
     }
 
     .image-banner .image-content {
@@ -1579,8 +1556,9 @@ h3.friend-link-title {
 
     .archive-content h3 {
         position: relative;
+        margin-left: 3.75rem;
         padding-bottom: 8px;
-        font-size:15px;
+        font-size: 18px;
     }
 
     .archives .archives-item {
@@ -1650,7 +1628,7 @@ h3.friend-link-title {
     }
 
     .post-content a img {
-         width:100% !important;
+        width:100% !important;
     }
 
     .post-content blockquote {
@@ -1758,18 +1736,18 @@ h3.friend-link-title {
     }
 
     .post-copyright {
-       list-style: none;
-       padding: 0;
+        list-style: none;
+        padding: 0;
     }
 
     .post-other-info {
-      border-top: 1px dashed #ccc;
-      padding:1em 0;
+        border-top: 1px dashed #ccc;
+        padding:1em 0;
     }
 
     .post-other-info a {
-      float: none !important;
-      margin-bottom: 1em;
+        float: none !important;
+        margin-bottom: 1em;
     }
 
     .post-other-info a.pull-right {
@@ -2074,4 +2052,8 @@ h3.friend-link-title {
 
 .aplayer.show {
     opacity: 1!important
+}
+
+#animate {
+    z-index: -1!important;
 }

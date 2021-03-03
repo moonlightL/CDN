@@ -35,6 +35,8 @@
         $('head').append('<link href="' + APlayer.css + '" rel="stylesheet" type="text/css" />');
         $.getScript(APlayer.js);
         $.getScript("//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js");
+        $("body").css("cursor", "url('" + baseLink + "/source/images/normal.cur'), default");
+        $("a").css("cursor", "url('" + baseLink + "/source/images/link.cur'), pointer");
     };
 
     let CURRENT_MODE = "current_mode";
@@ -197,22 +199,18 @@
 
     const contentWayPoint = function () {
         $.getScript(APP.plugins.wayPoints.js, function() {
-            let i = 0;
             $('.animate-box').waypoint(function (direction) {
                 if (direction === 'down' && !$(this.element).hasClass('animated')) {
-                    i++;
                     $(this.element).addClass('item-animate');
-                    setTimeout(function () {
-                        $('body .animate-box.item-animate').each(function (k) {
-                            let el = $(this);
-                            setTimeout(function () {
-                                let effect = el.data('animate-effect');
-                                effect = effect || 'fadeInUp';
-                                el.addClass(effect + ' animated visible');
-                                el.removeClass('item-animate');
-                            }, k * 300, 'easeInOutExpo');
-                        });
-                    }, 100);
+                    $('body .animate-box.item-animate').each(function (k) {
+                        let el = $(this);
+                        setTimeout(function () {
+                            let effect = el.data('animate-effect');
+                            effect = effect || 'fadeInUp';
+                            el.addClass(effect + ' animated visible');
+                            el.removeClass('item-animate');
+                        }, k * 300, 'easeInOutExpo');
+                    });
                 }
             }, {
                 offset: '85%'
@@ -228,7 +226,7 @@
 
         $("#modal-iframe").iziModal({
             iframe: true,
-            headerColor: "rgb(78,122,177)",
+            headerColor: "rgb(10,10,10)",
             title: '<i class="fa fa-search"></i> 站内搜索' ,
             width: 620,
             iframeHeight: 360,
@@ -309,11 +307,33 @@
         });
     };
 
-    const copyEvent = function() {
+    const copyInfoEvent = function() {
         let clipboard = new ClipboardJS('.info-btn');
         clipboard.on('success', function(e) {
             layer.msg("复制成功");
             e.clearSelection();
+        });
+    };
+
+    const copyCodeEvent = function() {
+        let $highlightArr = $(".highlight");
+        $highlightArr.each(function(index, domEle) {
+            let $highlight = $(domEle);
+            let $table = $highlight.find("table");
+            let copyBtn = $("<span class='copy-btn'><i class='fa fa-copy'></i> 复制</span>");
+            $highlight.append(copyBtn);
+            let clipboard = new ClipboardJS(copyBtn.get(0), {
+                text: function(trigger) {
+                    let html = $table.find("td.code pre").html();
+                    html = html.replace(/<br>/g, "\r\n");
+                    return $(html).text();
+                }
+            });
+
+            clipboard.on('success', function(e) {
+                layer.msg("复制成功");
+                e.clearSelection();
+            });
         });
     };
 
@@ -322,6 +342,22 @@
         if ($postDetail.length > 0) {
             $.getScript(APP.plugins.toc.js, function () {
                 $(".post-toc").html(tocHelper("nav"));
+                $('body').scrollspy({ offset: 100, target: '.post-toc' });
+                let headArr = $(".post-detail").find("h3");
+                $(window).scroll(function(e) {
+                    let scrollTop = $(this).scrollTop();
+                    // 确认当前滚动的目录索引
+                    let current = 0;
+                    $.grep(headArr, function(domEle, index) {
+                        if (scrollTop >= $(domEle).offset().top - 100) {
+                            current = index;
+                            return true;
+                        }
+                    });
+                    $(".post-toc").find("li.nav-level-2").removeClass("active");
+                    let currentHead = $(".post-toc").find("li.nav-level-2").eq(current);
+                    currentHead.addClass("active");
+                });
             });
 
             $.getScript(APP.plugins.highlight.js, function () {
@@ -333,6 +369,7 @@
             sidebarEvent();
             rewardEvent();
             praiseEvent();
+            copyCodeEvent();
         }
     };
 
@@ -340,9 +377,6 @@
         $(document).pjax('a[data-pjax]', '#wrap', {fragment: '#wrap', timeout: 8000});
         $(document).on('pjax:send', function() { NProgress.start(); });
         $(document).on('pjax:complete',   function(e) {
-            scrollIndicator();
-            loadLazy();
-            contentWayPoint();
             postEvent();
             $.getScript("//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js");
 
@@ -353,6 +387,7 @@
             $target.parent("li").addClass("current");
             NProgress.done();
         });
+        $(document).on('pjax:end', function() { scrollIndicator(); contentWayPoint(); loadLazy();});
     };
 
     const scrollIndicator = function () {
@@ -393,7 +428,7 @@
         loadLazy();
         contentWayPoint();
         searchEvent();
-        copyEvent();
+        copyInfoEvent();
         postEvent();
         pjaxEvent();
         loadResource();
