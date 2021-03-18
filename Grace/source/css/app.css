@@ -173,6 +173,16 @@ body::-webkit-scrollbar-thumb {
     width: 8px;
     margin: 0 auto;
     background: var(--primary-color);
+    background-image: -webkit-linear-gradient(
+        45deg,
+        rgba(255, 255, 255, 0.4) 25%,
+        transparent 25%,
+        transparent 50%,
+        rgba(255, 255, 255, 0.4) 50%,
+        rgba(255, 255, 255, 0.4) 75%,
+        transparent 75%,
+        transparent
+    );
 }
 
 ::selection {
@@ -192,6 +202,7 @@ body::-webkit-scrollbar-thumb {
     height: 0.1875rem;
     background: var(--primary-color);
     box-shadow: 0 1px 5px var(--primary-color);
+    transition: all .5s;
     z-index: 10001;
 }
 
@@ -1877,7 +1888,7 @@ nav.navBar.show ul.menu li.current>i {
     color: #ccc;
     text-align: right;
     background-color: #2d2d2d;
-    border-radius: 4px 0 0 4px
+    border-radius: 0 0 0 4px;
 }
 
 .main .post-content .highlight .gutter pre::before {
@@ -1896,7 +1907,7 @@ nav.navBar.show ul.menu li.current>i {
     padding-left: 10px;
     padding-right: 10px;
     background-color: #2d2d2d;
-    border-radius: 0 4px 4px 0
+    border-radius: 0 0 4px 0;
 }
 
 .main .post-content .highlight .hljs {

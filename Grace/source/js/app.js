@@ -389,7 +389,7 @@
 
     const pjaxEvent = function() {
         $(document).pjax('a[data-pjax]', '#wrap', {fragment: '#wrap', timeout: 8000});
-        $(document).on('pjax:send', function() { NProgress.start(); });
+        $(document).on('pjax:send', function() { /*NProgress.start();*/ });
         $(document).on('pjax:complete',   function(e) {
             chickenSoup();
             postEvent();
@@ -401,7 +401,7 @@
             $arr.removeClass("current");
             let $target = $navBar.find("ul.menu>li>a").filter("[href='" + window.location.pathname + "']");
             $target.parent("li").addClass("current");
-            NProgress.done();
+            /*NProgress.done();*/
         });
         $(document).on('pjax:end', function() { scrollIndicator(); contentWayPoint(); loadLazy();});
     };
