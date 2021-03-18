@@ -1,5 +1,5 @@
 ;
-(function() {
+(function($, window) {
     let APP = {
         plugins: {
             APlayer: {
@@ -145,7 +145,6 @@
                 $(this).html("<i class='fa fa-sun-o'></i>");
             }
         });
-
     };
 
     const navBarShow = function() {
@@ -337,6 +336,20 @@
         });
     };
 
+    const runCodeEvent = function() {
+        $(".run-code").on("click", function() {
+            let $btn = $(this);
+            let html = $btn.prev("figure").find("td.code pre").html();
+            html = html.replace(/<br>/g, "\r\n");
+            let codeContent = $(html).text();
+            let childWin = window.open("", "_blank", "");
+            childWin.document.open("text/html", "replace");
+            childWin.opener = null;
+            childWin.document.write(codeContent);
+            childWin.document.close()
+        });
+    };
+
     const postEvent = function() {
         let $postDetail = $(".post-detail");
         if ($postDetail.length > 0) {
@@ -370,6 +383,7 @@
             rewardEvent();
             praiseEvent();
             copyCodeEvent();
+            runCodeEvent();
         }
     };
 
@@ -377,6 +391,7 @@
         $(document).pjax('a[data-pjax]', '#wrap', {fragment: '#wrap', timeout: 8000});
         $(document).on('pjax:send', function() { NProgress.start(); });
         $(document).on('pjax:complete',   function(e) {
+            chickenSoup();
             postEvent();
             $.getScript("//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js");
 
@@ -388,6 +403,26 @@
             NProgress.done();
         });
         $(document).on('pjax:end', function() { scrollIndicator(); contentWayPoint(); loadLazy();});
+    };
+
+    const chickenSoup = function() {
+        let $notice = $("#notice");
+        if ($notice.length > 0) {
+            let value = sessionStorage.getItem("chickenSoup");
+            if (value) {
+                $notice.html("<div class='animated fadeInDown'><i class='fa fa-bullhorn'></i> 当前毒鸡汤: " + value + "</div>");
+            } else {
+                $.ajax({
+                    type: "GET",
+                    url: "chickenSoup.json",
+                    dataType: "JSON",
+                    success: function(resp) {
+                        $notice.html("<div class='animated fadeInDown'><i class='fa fa-bullhorn'></i> 当前毒鸡汤: " + resp.data.data + "</div>");
+                        sessionStorage.setItem("chickenSoup", resp.data.data);
+                    }
+                });
+            }
+        }
     };
 
     const scrollIndicator = function () {
@@ -432,6 +467,7 @@
         postEvent();
         pjaxEvent();
         loadResource();
+        chickenSoup();
     });
 
-})();
+})(jQuery, window);
