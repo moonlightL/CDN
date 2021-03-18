@@ -394,6 +394,7 @@
             chickenSoup();
             postEvent();
             $.getScript("//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js");
+            pushEvent();
 
             let $navBar = $("#navBar");
             let $arr = $navBar.find("ul.menu>li");
@@ -423,6 +424,10 @@
                 });
             }
         }
+    };
+
+    const pushEvent = function() {
+        $.getScript("https://zz.bdstatic.com/linksubmit/push.js");
     };
 
     const scrollIndicator = function () {
@@ -468,6 +473,7 @@
         pjaxEvent();
         loadResource();
         chickenSoup();
+        pushEvent();
     });
 
 })(jQuery, window);
