@@ -190,7 +190,7 @@
     const loadLazy = function() {
         $.getScript(APP.plugins.lazyLoad.js, function() {
             $("img.lazyload").lazyload({
-                placeholder : baseLink + "/source/images/loading.jpg",
+                placeholder : baseLink + "/source/images/loading2.jpg",
                 effect: "fadeIn"
             });
         })
@@ -418,6 +418,7 @@
                     url: "chickenSoup.json",
                     dataType: "JSON",
                     success: function(resp) {
+                        console.log(resp);
                         $notice.html("<div class='animated fadeInDown'><i class='fa fa-bullhorn'></i> 当前毒鸡汤: " + resp.data.data + "</div>");
                         sessionStorage.setItem("chickenSoup", resp.data.data);
                     }
