@@ -1,6 +1,6 @@
 function tocHelper(className) {
     let headingsMaxDepth = 6;
-    let arr = ['h2', 'h3', 'h4'];
+    let arr = ['h2', 'h3', 'h4', 'h5', 'h6'];
     let headingsSelector = arr.slice(0, headingsMaxDepth).join(',');
     let headings = $("#post-content").find(headingsSelector);
     if (!headings.length) return '';
@@ -13,7 +13,7 @@ function tocHelper(className) {
     headings.each(function(index, domEle) {
         if (!$(domEle).hasClass("post-title")) {
             let level = arr.indexOf(this.localName) + 1;
-            let id = $(this).text().replace(/\s+/g, "").replace("(", "").replace(")", "");
+            let id = $(this).attr("id").replace(/\s+/g,"-");
             let text = $(this).text();
             lastNumber[level - 1]++;
             for (i = level; i <= 5; i++) {

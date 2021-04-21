@@ -120,7 +120,7 @@
                             fixed: true,
                             listFolded: true,
                             autoplay: true,
-                            listMaxHeight: 90,
+                            listMaxHeight: "120px",
                             audio: resp.data
                         });
                         $aplayer.addClass("inited");
@@ -389,7 +389,7 @@
 
     const pjaxEvent = function() {
         $(document).pjax('a[data-pjax]', '#wrap', {fragment: '#wrap', timeout: 8000});
-        $(document).on('pjax:send', function() { /*NProgress.start();*/ });
+        $(document).on('pjax:send', function() {});
         $(document).on('pjax:complete',   function(e) {
             chickenSoup();
             postEvent();
@@ -401,7 +401,6 @@
             $arr.removeClass("current");
             let $target = $navBar.find("ul.menu>li>a").filter("[href='" + window.location.pathname + "']");
             $target.parent("li").addClass("current");
-            /*NProgress.done();*/
         });
         $(document).on('pjax:end', function() { scrollIndicator(); contentWayPoint(); loadLazy();});
     };
@@ -418,7 +417,6 @@
                     url: "chickenSoup.json",
                     dataType: "JSON",
                     success: function(resp) {
-                        console.log(resp);
                         $notice.html("<div class='animated fadeInDown'><i class='fa fa-bullhorn'></i> 当前毒鸡汤: " + resp.data.data + "</div>");
                         sessionStorage.setItem("chickenSoup", resp.data.data);
                     }
@@ -459,6 +457,14 @@
         }
     }
 
+    const ServiceWorker = function() {
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/service-worker.js');
+            });
+        }
+    };
+
     $(function() {
         scrollIndicator();
         themModeEvent();
@@ -475,6 +481,7 @@
         loadResource();
         chickenSoup();
         pushEvent();
+        ServiceWorker();
     });
 
 })(jQuery, window);

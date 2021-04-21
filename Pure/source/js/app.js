@@ -268,11 +268,10 @@
     };
 
     const pjaxEvent = function() {
-        $(document).pjax('a[data-pjax]', '#rightPanel', {fragment: '#rightPanel', timeout: 8000});
+        $(document).pjax('a[data-pjax]', '#main', {fragment: '#main', timeout: 8000});
         $(document).on('pjax:send', function() {NProgress.start(); });
         $(document).on('pjax:complete',   function(e) {
             postEvent();
-            $.getScript("//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js");
             pushEvent();
 
             let $sidebar = $("#sidebar");
@@ -281,6 +280,7 @@
             let $target = $sidebar.find("ul.first-menus>li>a").filter("[href='" + window.location.pathname + "']");
             $target.parent("li").addClass("current");
             NProgress.done();
+            $.getScript("//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js");
         });
         $(document).on('pjax:end', function() { contentWayPoint(); loadLazy();});
     };
@@ -290,14 +290,10 @@
     };
 
     const ServiceWorker = function() {
-        if (navigator.serviceWorker) {
-            window.onload = function () {
-                navigator.serviceWorker.register('/sw.js', {scope: '/'}).then(function () {
-                    console.log('service worker %c注册成功', 'color: green')
-                }, function (err) {
-                    console.log('service worker %c注册失败', 'color: red', '错误信息：' + err)
-                })
-            }
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/service-worker.js');
+            });
         }
     };
 
@@ -311,6 +307,7 @@
         pjaxEvent();
         pushEvent();
         loadResource();
+        ServiceWorker();
     });
 
 })(jQuery, window);
