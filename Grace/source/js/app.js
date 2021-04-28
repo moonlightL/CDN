@@ -319,7 +319,7 @@
         $highlightArr.each(function(index, domEle) {
             let $highlight = $(domEle);
             let $table = $highlight.find("table");
-            let copyBtn = $("<span class='copy-btn'><i class='fa fa-copy'></i> 复制</span>");
+            let copyBtn = $("<span class='copy-btn'><i class='fa fa-clone'></i> 复制</span>");
             $highlight.append(copyBtn);
             let clipboard = new ClipboardJS(copyBtn.get(0), {
                 text: function(trigger) {
@@ -353,6 +353,7 @@
     const postEvent = function() {
         let $postDetail = $(".post-detail");
         if ($postDetail.length > 0) {
+
             $.getScript(APP.plugins.toc.js, function () {
                 $(".post-toc").html(tocHelper("nav"));
                 $('body').scrollspy({ offset: 100, target: '.post-toc' });

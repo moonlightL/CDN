@@ -31,13 +31,13 @@ a, abbr, acronym, address, applet, article, aside, audio, b, big, blockquote, bo
     --panel-color: #24282b;
     --post-color: #24282b;
     --primary-color: #2ECC71;
-    --text-color: #d8d8d8;
+    --text-color: #b3b4b5;
     --shadow-color: #5d5b5b;
     --shadow-hover-color: #b9b7b7;
     --link-hover-color: #2b9a5c;
     --border-color: #777;
     --text-shadow-color: #646363;
-    --brightness-value: brightness(0.8)
+    --brightness-value: brightness(0.7)
 }
 
 a {
@@ -69,15 +69,17 @@ h6 {
     font-weight: 700;
     line-height: 1.5;
     margin: 1.25rem 0 .9375rem;
+    font-family: "Heiti", sans-serif;
 }
 
 p {
-    margin: 1rem auto;
+    margin: 1.5rem auto;
     text-indent: 0;
     letter-spacing: 1px;
     text-align: justify;
-    line-height: 1.9rem;
-    font-size: 1.05rem;
+    line-height: 1.8rem;
+    font-size: 1.0rem;
+    opacity: .9;
 }
 
 .visible {
@@ -162,7 +164,7 @@ body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: auto;
-    font-family: "Noto Serif SC", "Open sans", sans-serif;
+    font-family: "Microsoft YaHei", sans-serif;
     text-shadow: 0 1px 3px var(--text-shadow-color);
 }
 
@@ -178,14 +180,14 @@ body::-webkit-scrollbar-thumb {
     margin: 0 auto;
     background: var(--primary-color);
     background-image: -webkit-linear-gradient(
-        45deg,
-        rgba(255, 255, 255, 0.4) 25%,
-        transparent 25%,
-        transparent 50%,
-        rgba(255, 255, 255, 0.4) 50%,
-        rgba(255, 255, 255, 0.4) 75%,
-        transparent 75%,
-        transparent
+            45deg,
+            rgba(255, 255, 255, 0.4) 25%,
+            transparent 25%,
+            transparent 50%,
+            rgba(255, 255, 255, 0.4) 50%,
+            rgba(255, 255, 255, 0.4) 75%,
+            transparent 75%,
+            transparent
     );
 }
 
@@ -298,17 +300,17 @@ div.menu-toggle {
     filter: var(--brightness-value);
 }
 
-/*.header::before {*/
-/*    content: '';*/
-/*    position: absolute;*/
-/*    top: 0;*/
-/*    bottom: 0;*/
-/*    left: 0;*/
-/*    right: 0;*/
-/*    z-index: 3;*/
-/*    background-attachment: fixed;*/
-/*    background-image: url(../images/dot.gif);*/
-/*}*/
+/*.header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 3;
+    background-attachment: fixed;
+    background-image: url(../images/dot.gif);
+}*/
 
 .header .cover {
     position: absolute;
@@ -376,7 +378,6 @@ nav.navBar ul li {
 nav.navBar ul.menu li a {
     position: relative;
     color: #fff;
-    font-weight: 200;
     display: inline-block
 }
 
@@ -452,7 +453,9 @@ nav.navBar ul li.title .name {
 }
 
 nav.navBar.show ul.menu li a {
-    color: var(--text-color)
+    color: var(--text-color);
+    font-weight: 600;
+    opacity: .8;
 }
 
 nav.navBar ul.menu>li:not(.title)>a::after {
@@ -653,6 +656,7 @@ nav.navBar.show ul.menu li.current>i {
 
 .header .brand p.title {
     position: relative;
+    font-family: "Heiti", sans-serif;
     font-size: 3.5em;
     line-height: 1.2;
 }
@@ -928,7 +932,7 @@ nav.navBar.show ul.menu li.current>i {
 }
 
 .main .post-article .info a.btn:hover {
-    opacity: .9;
+    box-shadow: 0 1px 20px -4px var(--primary-color);
 }
 
 .main .post-article .info .summary {
@@ -938,6 +942,7 @@ nav.navBar.show ul.menu li.current>i {
     margin-top: 1rem;
     text-align: justify;
     line-height: 1.6rem;
+    opacity: .9;
 }
 
 .main .post-article .info .meta {
@@ -955,10 +960,9 @@ nav.navBar.show ul.menu li.current>i {
     padding: .5rem 1rem;
     border-radius: 1rem 0;
     background: var(--primary-color);
-    box-shadow: 0 1px 20px -4px var(--primary-color);
+    box-shadow: 0 1px 12px -4px var(--primary-color);
     color: #fff;
     letter-spacing: 2px;
-    font-family: "Microsoft YaHei", sans-serif;
 }
 
 .main .post-article:nth-child(even) {
@@ -1195,7 +1199,6 @@ nav.navBar.show ul.menu li.current>i {
 .main .posts-collapse .desc {
     margin-left: 20px;
     display: inline-block;
-    opacity: 0
 }
 
 .main .posts-collapse .collection-title {
@@ -1857,6 +1860,8 @@ nav.navBar.show ul.menu li.current>i {
     padding: 1rem 0 0 0;
     background-color: #000;
     border-radius: 0 0 4px 0;
+    text-shadow: none;
+    font-size: 15px;
 }
 
 .main .post-content pre code {
@@ -1969,7 +1974,8 @@ nav.navBar.show ul.menu li.current>i {
 
 .main ol li,
 .main ul li {
-    position: relative
+    position: relative;
+    opacity: .9;
 }
 
 .main ol li {
@@ -2102,7 +2108,8 @@ nav.navBar.show ul.menu li.current>i {
 }
 
 .main .post-reward p {
-    color: #999
+    color: #999;
+    text-align: center;
 }
 
 .main .post-reward .codes {
@@ -2217,6 +2224,7 @@ nav.navBar.show ul.menu li.current>i {
     color: #e1e1e1;
     margin: 10px 0;
     font-size: 22px;
+    line-height: 2rem;
 }
 
 .main .post-other-info .post-item a:hover,
@@ -2346,7 +2354,9 @@ nav.navBar.show ul.menu li.current>i {
 .main .sidebar .panel-item.active {
     opacity: 1;
     transform: translateY(0);
-    visibility: visible
+    visibility: visible;
+    overflow: auto;
+    height: 30rem;
 }
 
 .main .sidebar .post-toc::-webkit-scrollbar {
@@ -2402,7 +2412,7 @@ nav.navBar.show ul.menu li.current>i {
     transition-property: all;
     color: var(--text-color);
     border-bottom-color: #ccc;
-    padding: 0 1rem!important
+    padding: 0 1rem!important;
 }
 
 .post-toc ol a:hover {
@@ -2454,7 +2464,7 @@ nav.navBar.show ul.menu li.current>i {
     text-align: center;
     font-size: 22px;
     font-weight: 600;
-    margin: 1rem 0
+    margin: 1rem 0;
 }
 
 .main .sidebar .site-info .state {
@@ -2477,7 +2487,7 @@ nav.navBar.show ul.menu li.current>i {
 }
 
 .main .sidebar .site-info .state .item a {
-    color: var(--text-color)
+    color: var(--text-color);
 }
 
 .main .sidebar .site-info .state .item a:hover {
@@ -2656,7 +2666,11 @@ nav.navBar.show ul.menu li.current>i {
 
 .main .friend-link .blogger-link-info {
     padding: 1rem 0;
-    border-radius: 4px
+    border-radius: 4px;
+    font-size: 16px;
+}
+.main .friend-link .apply-for-info {
+    font-size: 16px;
 }
 
 .main .friend-link .tool-link-title li {
@@ -2738,9 +2752,9 @@ nav.navBar.show ul.menu li.current>i {
 }
 
 .links .item .title {
-    margin: .5rem 0;
     font-size: 18px;
-    font-weight: 700
+    font-weight: 700;
+    text-shadow: none;
 }
 
 .links .item:hover .title {
@@ -2749,7 +2763,7 @@ nav.navBar.show ul.menu li.current>i {
 
 .links .item .info p {
     font-size: .75em;
-    margin: .5rem 0
+    margin: .2rem 0
 }
 
 .links .item svg {
@@ -2825,7 +2839,7 @@ nav.navBar.show ul.menu li.current>i {
 
 .main .custom-page-detail .custom-page-content p {
     line-height: 1.75em;
-    margin: 1rem 0;
+    margin: 1.5rem 0;
 }
 
 .main .search-query {
@@ -2916,7 +2930,7 @@ nav.navBar.show ul.menu li.current>i {
 
 div.note {
     padding: 15px;
-    margin-bottom: 20px;
+    margin: 2rem 0;
     border: 1px solid transparent;
     border-radius: 4px;
     font-family: "FontAwesome";
@@ -2979,7 +2993,7 @@ div.note.note-warning {
 
 div.note.note-warning:not(.no-icon)::before {
     position: absolute;
-    content: "\f0c4";
+    content: "\f06a";
     left: 1rem;
     width: 32px;
     height: 32px;

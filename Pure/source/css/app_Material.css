@@ -476,7 +476,7 @@ body::-webkit-scrollbar-thumb {
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
-    color: #A0A0A0;
+    color: #898e92;
 }
 
 .main .article-item h3 a {
@@ -522,7 +522,7 @@ body::-webkit-scrollbar-thumb {
 .main .article-item .meta ul li {
     float: left;
     margin-right: 1rem;
-    color: #A0A0A0;
+    color: #898e92;
     font-size: 13px;
 }
 
@@ -1347,6 +1347,7 @@ body::-webkit-scrollbar-thumb {
 
 .main .about-detail,
 .main .comment-panel {
+    color: var(--text-color);
     animation: slowUp .2s
 }
 
@@ -2283,7 +2284,7 @@ body::-webkit-scrollbar-thumb {
 /** 提示框 **/
 div.note {
     padding: 15px;
-    margin-bottom: 20px;
+    margin: 2rem 0;
     border: 1px solid transparent;
     font-family: "FontAwesome";
 }
@@ -2346,7 +2347,7 @@ div.note.note-warning {
 
 div.note.note-warning:not(.no-icon)::before {
     position: absolute;
-    content: "\f0c4";
+    content: "\f06a";
     left: 1rem;
     width: 32px;
     height: 32px;

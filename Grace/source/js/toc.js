@@ -13,8 +13,9 @@ function tocHelper(className) {
     headings.each(function(index, domEle) {
         if (!$(domEle).hasClass("post-title")) {
             let level = arr.indexOf(this.localName) + 1;
-            let id = $(this).attr("id").replace(/\s+/g,"-");
             let text = $(this).text();
+            let id = $(this).attr("id") || text.replace(/\s+/g,"-");
+            $(domEle).attr("id", id);
             lastNumber[level - 1]++;
             for (i = level; i <= 5; i++) {
                 lastNumber[i] = 0
