@@ -30,6 +30,9 @@ a, abbr, acronym, address, applet, article, aside, audio, b, big, blockquote, bo
     --hr-color: #dcdede;
     --full-cover-color: #FFF;
     --text-shadow-color: #e1dfdf;
+    --table-border-color: #ddd;
+    --table-td-color: #f0f2f5;
+    --card-box-shadow: 0 2px 2px 0 rgb(0 0 0 / 5%), 0 3px 1px -2px rgb(0 0 0 / 8%), 0 1px 5px 0 rgb(0 0 0 / 8%);
     --brightness-value: brightness(1);
 }
 
@@ -45,6 +48,9 @@ a, abbr, acronym, address, applet, article, aside, audio, b, big, blockquote, bo
     --hr-color: #262626;
     --full-cover-color: #d8d8d8;
     --text-shadow-color: #646363;
+    --table-border-color: #5d5c5c;
+    --table-td-color: #202020;
+    --card-box-shadow: 0 2px 2px 0 rgb(0 0 0 / 30%), 0 3px 1px -2px rgb(0 0 0 / 30%), 0 1px 5px 0 rgb(0 0 0 / 30%);
     --brightness-value: brightness(.9);
 }
 
@@ -94,6 +100,10 @@ p {
     letter-spacing: 1px;
     font-family: "Play", "Microsoft Yahei", sans-serif;
     text-align: justify;
+}
+
+b, strong {
+   font-weight: bold;
 }
 
 .visible {
@@ -286,7 +296,6 @@ body::-webkit-scrollbar-thumb {
 .wrap .left-panel .first-menus > li.current,
 .wrap .left-panel .first-menus > li:hover {
     background-color: var(--primary-color);
-    box-shadow: 0 .125rem .65rem var(--primary-color);
 }
 
 .wrap .left-panel .first-menus > li.current a.first i,
@@ -351,6 +360,40 @@ body::-webkit-scrollbar-thumb {
     color: var(--text-color)
 }
 
+.wrap .left-panel .menu-tool .menu-tool-panel {
+    position: absolute;
+    width: 140px;
+    height: 80px;
+    left: 100px;
+    bottom: 8px;
+    background: var(--panel-color);
+    border-radius: .25rem;
+    font-size: 14px;
+    box-shadow: 0 .125rem .65rem var(--shadow-color);
+    transform: rotateX(90deg);
+    transition: all .3s;
+}
+
+.wrap .left-panel .menu-tool .menu-tool-panel.show {
+    transform: rotateX(0);
+}
+
+.wrap .left-panel .menu-tool ul {
+    padding: 1rem;
+}
+
+.wrap .left-panel .menu-tool li {
+    line-height: 1.5rem;
+}
+
+.wrap .left-panel .menu-tool .margin-r {
+    margin-right: 10px;
+    vertical-align: top;
+    line-height: 1.6;
+    font-size: 12px;
+    color: var(--text-color);
+}
+
 @media (max-width:767px) {
     .wrap .left-panel .first-menus {
         transform: translateY(20%);
@@ -413,7 +456,7 @@ body::-webkit-scrollbar-thumb {
     background: var(--panel-color);
     color: var(--text-color);
     filter: var(--brightness-value);
-    box-shadow: 0 2px 2px 0 rgba(0,0,0,.05), 0 3px 1px -2px rgba(0,0,0,.08), 0 1px 5px 0 rgba(0,0,0,.08);
+    box-shadow: var(--card-box-shadow);
 }
 
 .main .cover {
@@ -435,11 +478,13 @@ body::-webkit-scrollbar-thumb {
     transform: translateX(-50%) translateY(-50%);
     color: #FFF;
     text-shadow: 0 1px 20px #000;
+    line-height: 1.2;
 }
 
 .main .nav-name div {
     font-size: 14px;
     text-align: center;
+    margin-top: 1rem;
 }
 
 .main .nav-name div a {
@@ -1124,12 +1169,8 @@ body::-webkit-scrollbar-thumb {
     animation: slowUp .2s
 }
 
-.main .friend-link-detail ol li {
-    counter-increment: list
-}
-
 .main .friend-link-detail ol li::before {
-    content: counter(list);
+    content: counter(list-item);
     width: 20px;
     height: 20px;
     line-height: 20px;
@@ -1697,8 +1738,8 @@ body::-webkit-scrollbar-thumb {
 
 .main .post-content blockquote {
     border-left: 3px solid var(--primary-color);
-    padding: .1rem 0 .8rem 1rem;
-    background-color: var(--panel-color);
+    padding: 1rem;
+    background-color: var(--background-color);
 }
 
 .main table,
@@ -1709,7 +1750,8 @@ body::-webkit-scrollbar-thumb {
 .main table.table {
     background: var(--panel-color);
     color: var(--text-color);
-    box-shadow: 0 1px 30px -6px var(--shadow-color);
+    border: 1px solid var(--table-border-color);
+    /*box-shadow: 0 1px 30px -6px var(--shadow-color);*/
 }
 
 .main table th:first-child {
@@ -1729,17 +1771,31 @@ body::-webkit-scrollbar-thumb {
 
 .main table th {
     font-weight: 600;
-    background-color: var(--theme-orange);
-    color: #FFF;
+    border-bottom: 2px solid var(--table-border-color) !important;
+    /*background-color: var(--theme-orange);*/
+    /*color: #FFF;*/
 }
 
-.main table tr:hover {
+.main table tbody tr:hover {
     background-color: var(--background-color);
 }
 
 .main table td {
     font-size: 14px;
-    border-bottom: 1px solid var(--hr-color) !important;
+    border-bottom: 1px solid var(--table-border-color) !important;
+}
+
+.main .post-content > table th,
+.main .post-content > table td,
+.main .custom-page-content > table th,
+.main .custom-page-content > table td{
+    padding: 12px !important;
+    border-right: 1px solid var(--table-border-color) !important;
+}
+
+.main .post-content table>tbody>tr:nth-of-type(odd),
+.main .custom-page-content table>tbody>tr:nth-of-type(odd) {
+    background-color: var(--table-td-color);
 }
 
 .main .post-content code {
@@ -1897,7 +1953,8 @@ body::-webkit-scrollbar-thumb {
 
 .main .post-content img {
     max-width: 100%;
-    box-shadow: 0 1px 30px -10px var(--shadow-color);
+    border: 1px solid var(--background-color);
+    /*box-shadow: 0 1px 30px -10px var(--shadow-color);*/
 }
 
 .main ol li,
@@ -1905,12 +1962,8 @@ body::-webkit-scrollbar-thumb {
     position: relative
 }
 
-.main .inner ol li {
-    counter-increment: list
-}
-
 .main .inner ol li::before {
-    content: counter(list);
+    content: counter(list-item);
     width: 20px;
     height: 20px;
     line-height: 20px;
@@ -1931,10 +1984,10 @@ body::-webkit-scrollbar-thumb {
 
 .main .inner ul li::before {
     content: "";
-    width: 16px;
-    height: 16px;
+    width: 12px;
+    height: 12px;
     float: left;
-    margin: 6px 12px 0 0;
+    margin: 8px 12px 0 0;
     color: #fff;
     font-size: 12px;
     font-style: normal;
@@ -2184,6 +2237,7 @@ body::-webkit-scrollbar-thumb {
     margin-top: 22rem;
     margin-left: 2rem;
     width: 16rem;
+    font-size: 14px;
 }
 
 @media (max-width:991px) {
@@ -2287,6 +2341,7 @@ div.note {
     margin: 2rem 0;
     border: 1px solid transparent;
     font-family: "FontAwesome";
+    text-shadow: none;
 }
 
 div.note:not(.no-icon) {
@@ -2299,7 +2354,6 @@ div.note.note-success {
     background-color: #dff0d8;
     border-color: #d6e9c6;
     border-left: 3px solid #3c763d;
-    box-shadow: 0 1px 3px 1px #d6e9c6;
     text-shadow: none;
 }
 
@@ -2321,7 +2375,6 @@ div.note.note-info {
     background-color: #d9edf7;
     border-color: #bce8f1;
     border-left: 3px solid #31708f;
-    box-shadow: 0 1px 3px 1px #bce8f1;
 }
 
 div.note.note-info:not(.no-icon)::before {
@@ -2342,7 +2395,6 @@ div.note.note-warning {
     background-color: #fcf8e3;
     border-color: #faebcc;
     border-left: 3px solid #8a6d3b;
-    box-shadow: 0 1px 3px 1px #faebcc;
 }
 
 div.note.note-warning:not(.no-icon)::before {
@@ -2363,7 +2415,6 @@ div.note.note-danger {
     background-color: #f2dede;
     border-color: #ebccd1;
     border-left: 3px solid #a94442;
-    box-shadow: 0 1px 3px 1px #ebccd1;
 }
 
 div.note.note-danger:not(.no-icon)::before {

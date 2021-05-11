@@ -39,8 +39,8 @@
         // $('head').append('<link href="' + APlayer.css + '" rel="stylesheet" type="text/css" />');
         // $.getScript(APlayer.js);
         $.getScript("//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js");
-        $("body").css("cursor", "url('" + baseLink + "/source/images/normal.cur'), default");
-        $("a").css("cursor", "url('" + baseLink + "/source/images/link.cur'), pointer");
+        // $("body").css("cursor", "url('" + baseLink + "/source/images/normal.cur'), default");
+        // $("a").css("cursor", "url('" + baseLink + "/source/images/link.cur'), pointer");
     };
 
     let CURRENT_MODE = "current_mode";
@@ -65,10 +65,11 @@
         $("#sidebarBtn").off("click").on("click", function() {
             if ($sidebar.hasClass("show")) {
                 $sidebar.removeClass("show");
-                $(this).html("<i class='fa fa-ellipsis-v'></i>")
+                $(this).html("<i class='fa fa-ellipsis-v'></i>");
+                $("#menuToolPanel").removeClass("show");
             } else {
                 $sidebar.addClass("show");
-                $(this).html("<i class='fa fa-arrow-left'></i>")
+                $(this).html("<i class='fa fa-arrow-left'></i>");
             }
         });
 
@@ -112,6 +113,57 @@
                 scrollTop: $('html').offset().top
             }, 500);
         });
+
+        $("#toolBtn").off("click").on("click", function() {
+           let $menuToolPanel = $("#menuToolPanel");
+           if ($menuToolPanel.hasClass("show")) {
+               $menuToolPanel.removeClass("show");
+           } else {
+               $menuToolPanel.addClass("show");
+           }
+        });
+    };
+
+
+    let GLASS_THEME = "glass_theme";
+    let TEXT_SHADOW = "text_shadow";
+    const toolPanelEvent = function() {
+        let isGlassTheme = localStorage.getItem(GLASS_THEME);
+        let $glassTheme = $("#glassTheme");
+        if (isGlassTheme === "true") {
+            $("#appCss").attr("href", baseLink + "/source/css/app_Glass.css?v=" + version);
+            $glassTheme.prop("checked", true);
+        }
+
+        $glassTheme.off("click").on("click", function() {
+            let checked = $(this).prop("checked");
+            if (checked) {
+                $("#appCss").attr("href", baseLink + "/source/css/app_Glass.css?v=" + version);
+                localStorage.setItem(GLASS_THEME, "true");
+            } else {
+                $("#appCss").attr("href", baseLink + "/source/css/app_Material.css?v=" + version);
+                localStorage.removeItem(GLASS_THEME);
+            }
+        });
+
+        let isTextShadow = localStorage.getItem(TEXT_SHADOW);
+        let $body = $("body");
+        let $textShadow = $("#textShadow");
+        if (isTextShadow === "false") {
+            $body.css({"textShadow": "none"});
+        }
+
+        $textShadow.off("click").on("click", function() {
+            let checked = $(this).prop("checked");
+            if (checked) {
+                $body.css({"textShadow": "0 1px 3px var(--text-shadow-color)"});
+                localStorage.removeItem(TEXT_SHADOW);
+            } else {
+                $body.css({"textShadow": "none"});
+                localStorage.setItem(TEXT_SHADOW, "false");
+            }
+        });
+
     };
 
     const loadLazy = function() {
@@ -301,6 +353,7 @@
     $(function() {
         themModeEvent();
         commonEvent();
+        toolPanelEvent();
         loadLazy();
         contentWayPoint();
         copyInfoEvent();

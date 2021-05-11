@@ -82,6 +82,10 @@ p {
     opacity: .9;
 }
 
+b, strong {
+    font-weight: bold;
+}
+
 .visible {
     opacity: 1!important
 }
@@ -300,7 +304,7 @@ div.menu-toggle {
     filter: var(--brightness-value);
 }
 
-/*.header::before {
+.header::before {
     content: '';
     position: absolute;
     top: 0;
@@ -309,8 +313,9 @@ div.menu-toggle {
     right: 0;
     z-index: 3;
     background-attachment: fixed;
-    background-image: url(../images/dot.gif);
-}*/
+    /*background-image: url(../images/dot.gif);*/
+    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAKUlEQVQImU3IMREAIAgAwJfNkQCEsH8cijjpMf6vnXlQaIiJFx+omEBfmqIEZLe2jzcAAAAASUVORK5CYII=);
+}
 
 .header .cover {
     position: absolute;
@@ -657,8 +662,9 @@ nav.navBar.show ul.menu li.current>i {
 .header .brand p.title {
     position: relative;
     font-family: "Heiti", sans-serif;
-    font-size: 3.5em;
+    font-size: 3.2em;
     line-height: 1.2;
+    z-index: 100;
 }
 
 .header .brand p.title span.title-head {
@@ -1780,7 +1786,7 @@ nav.navBar.show ul.menu li.current>i {
 
 .main .post-content blockquote {
     border-left: 3px solid var(--primary-color);
-    padding: .1rem 0 .8rem 1rem;
+    padding: .1rem 1rem .8rem 1rem;
     background-color: var(--panel-color);
 }
 
@@ -1978,12 +1984,8 @@ nav.navBar.show ul.menu li.current>i {
     opacity: .9;
 }
 
-.main ol li {
-    counter-increment: list
-}
-
 .main ol li::before {
-    content: counter(list);
+    content: counter(list-item);
     width: 20px;
     height: 20px;
     line-height: 20px;

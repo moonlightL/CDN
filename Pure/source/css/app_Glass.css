@@ -154,7 +154,7 @@ p {
 
 body {
     line-height: 2;
-    background: url('../images/bg.jpg') no-repeat center center fixed;
+    background: url('../images/bg_02.jpg') no-repeat center center fixed;
     background-size: cover;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -320,6 +320,43 @@ body::-webkit-scrollbar-thumb {
     border-top: 1px solid var(--hr-color);
 }
 
+.wrap .left-panel .menu-tool .menu-tool-panel {
+    position: absolute;
+    width: 140px;
+    height: 80px;
+    left: 100px;
+    bottom: 8px;
+    background: var(--panel-color);
+    border-radius: .25rem;
+    font-size: 14px;
+    background-color: rgba(255,255,255,0.06);
+    backdrop-filter: blur(20px);
+    transform: rotateX(90deg);
+    transition: all .3s;
+}
+
+.wrap .left-panel .menu-tool .menu-tool-panel.show {
+    transform: rotateX(0);
+}
+
+.wrap .left-panel .menu-tool ul {
+    padding: 1rem;
+    background-color: rgba(255,255,255,0.06);
+    backdrop-filter: blur(20px);
+}
+
+.wrap .left-panel .menu-tool li {
+    line-height: 1.5rem;
+}
+
+.wrap .left-panel .menu-tool .margin-r {
+    margin-right: 10px;
+    vertical-align: top;
+    line-height: 1.6;
+    font-size: 12px;
+    color: var(--text-color);
+}
+
 @media (max-width:767px) {
     .wrap .left-panel .first-menus {
         transform: translateY(20%);
@@ -406,11 +443,13 @@ body::-webkit-scrollbar-thumb {
     transform: translateX(-50%) translateY(-50%);
     color: #FFF;
     text-shadow: 0 1px 20px #000;
+    line-height: 1.2;
 }
 
 .main .nav-name div {
     font-size: 14px;
     text-align: center;
+    margin-top: 1rem;
 }
 
 .main .nav-name div a {
@@ -425,10 +464,6 @@ body::-webkit-scrollbar-thumb {
 
 .main .index {
     filter: var(--brightness-value);
-}
-
-.main .post-index {
-    padding: 0 2rem 2rem 2rem;
 }
 
 .main .article-item {
@@ -757,6 +792,8 @@ body::-webkit-scrollbar-thumb {
     margin: 0 .5rem;
     position: relative;
     border-radius: 50%;
+    background-color: rgba(255,255,255,0.06);
+    backdrop-filter: blur(20px);
 }
 
 .main .pagination .page a {
@@ -766,8 +803,7 @@ body::-webkit-scrollbar-thumb {
 }
 
 .main .pagination .page:hover {
-    background-color: rgba(255,255,255,0.06);
-    backdrop-filter: blur(20px);
+    background-color: rgba(255,255,255,0.3);
 }
 
 .main .pagination .page:hover a {
@@ -775,7 +811,7 @@ body::-webkit-scrollbar-thumb {
 }
 
 .main .pagination span.current {
-    background-color: rgba(255,255,255,0.06);
+    background-color: rgba(255,255,255,0.3);
     backdrop-filter: blur(20px);
 }
 
@@ -1080,12 +1116,8 @@ body::-webkit-scrollbar-thumb {
     animation: slowUp 1s
 }
 
-.main .friend-link-detail ol li {
-    counter-increment: list
-}
-
 .main .friend-link-detail ol li::before {
-    content: counter(list);
+    content: counter(list-item);
     width: 20px;
     height: 20px;
     line-height: 20px;
@@ -1282,7 +1314,7 @@ body::-webkit-scrollbar-thumb {
 }
 
 .main .custom-page-detail .custom-page-content p {
-    font-size: 16px;
+    font-size: 14px;
     line-height: 1.75em
 }
 
@@ -1301,6 +1333,12 @@ body::-webkit-scrollbar-thumb {
     color: #fff
 }
 
+.main .comment-panel > p {
+    color: #ddd;
+    font-size: 1.25rem;
+    font-weight: bold;
+}
+
 .main .comment-panel .twikoo p {
     font-size: 14px
 }
@@ -1312,7 +1350,7 @@ body::-webkit-scrollbar-thumb {
 
 .tk-submit[data-v-619b4c52] {
     padding: 1.5rem 1.5rem 1rem 1.5rem;
-    border-radius: .25rem;
+    border-radius: 1rem;
     backdrop-filter: blur(20px);
     background-color: rgba(255,255,255,0.06);
     color: #d5d5d5;
@@ -1359,10 +1397,14 @@ body::-webkit-scrollbar-thumb {
     margin-top: 2rem;
 }
 
+.tk-comments-title[data-v-2619081a] {
+    color: #ddd;
+}
+
 .main .comment-panel .tk-comment[data-v-d82ce9a0] {
     border: none;
     padding: 1rem;
-    border-radius: .25rem;
+    border-radius: 1rem;
     backdrop-filter: blur(20px);
     background-color: rgba(255,255,255,0.06);
     color: #d5d5d5;
@@ -1596,14 +1638,17 @@ body::-webkit-scrollbar-thumb {
 
 .main .post-content blockquote {
     border-left: 3px solid var(--primary-color);
-    padding: .1rem 0 .8rem 1rem;
-    background-color: var(--panel-color);
+    padding: 1rem;
+    backdrop-filter: blur(20px);
+    background-color: rgba(255,255,255,0.06);
+    border-radius: 4px;
 }
 
 .main table.table {
     backdrop-filter: blur(20px);
     background-color: rgba(255,255,255,0.06);
     color: var(--text-color);
+    border-radius: 4px;
 }
 
 .main table th, .main table td {
@@ -1634,6 +1679,7 @@ body::-webkit-scrollbar-thumb {
     font-family: sans-serif;
     background-color: rgba(255,255,255,0.1);
     padding-top: 34px;
+    border-radius: 4px;
 }
 
 .main .post-content figure.highlight::before {
@@ -1670,7 +1716,7 @@ body::-webkit-scrollbar-thumb {
 .main .post-content pre {
     width: 100%;
     padding: 1rem 0 0 0;
-    box-shadow: 0 1px 30px 8px var(--shadow-color);
+    background-color: rgba(255,255,255,0.1);
 }
 
 .main .post-content pre code {
@@ -1678,7 +1724,8 @@ body::-webkit-scrollbar-thumb {
     margin-top: 1rem;
     padding: 1rem;
     position: relative;
-    background: #2d2d2d;
+    backdrop-filter: blur(20px);
+    background-color: rgba(0,0,0,0.1);
     color: #F1F1F1;
 }
 
@@ -1787,12 +1834,8 @@ body::-webkit-scrollbar-thumb {
     position: relative;
 }
 
-.main .inner ol li {
-    counter-increment: list
-}
-
 .main .inner ol li::before {
-    content: counter(list);
+    content: counter(list-item);
     width: 20px;
     height: 20px;
     line-height: 20px;
@@ -1814,10 +1857,10 @@ body::-webkit-scrollbar-thumb {
 
 .main .inner ul li::before {
     content: "";
-    width: 16px;
-    height: 16px;
+    width: 12px;
+    height: 12px;
     float: left;
-    margin: 6px 12px 0 0;
+    margin: 8px 12px 0 0;
     color: #fff;
     font-size: 12px;
     font-style: normal;
@@ -1921,6 +1964,7 @@ body::-webkit-scrollbar-thumb {
     backdrop-filter: blur(20px);
     background-color: rgba(255,255,255,0.06);
     color: #d5d5d5;
+    border-radius: 0 0 1rem 1rem;
 }
 
 .main .post-copyright ul li {
@@ -1983,8 +2027,15 @@ body::-webkit-scrollbar-thumb {
     color: var(--primary-color);
 }
 
-.main .post-other-info .post-item:last-child {
+.main .post-other-info .post-item:first-child,
+.main .post-other-info .post-item:first-child img {
+    border-radius: 1rem 0 0 1rem;
+}
+
+.main .post-other-info .post-item:last-child,
+.main .post-other-info .post-item:last-child img {
     float: right;
+    border-radius: 0 1rem 1rem 0;
 }
 
 .main .post-other-info .post-item:last-child span {
@@ -2062,6 +2113,7 @@ body::-webkit-scrollbar-thumb {
     margin-top: 22rem;
     margin-left: 2rem;
     width: 16rem;
+    font-size: 14px;
 }
 
 @media (max-width:991px) {
@@ -2169,8 +2221,9 @@ body::-webkit-scrollbar-thumb {
 /** 提示框 **/
 div.note {
     padding: 15px;
-    margin-bottom: 20px;
+    margin: 2rem 0;
     border: 1px solid transparent;
+    border-radius: 4px;
     font-family: "FontAwesome";
 }
 
@@ -2228,7 +2281,7 @@ div.note.note-warning {
 
 div.note.note-warning:not(.no-icon)::before {
     position: absolute;
-    content: "\f0c4";
+    content: "\f06a";
     left: 1rem;
     width: 32px;
     height: 32px;
