@@ -390,7 +390,7 @@
 
     const pjaxEvent = function() {
         $(document).pjax('a[data-pjax]', '#wrap', {fragment: '#wrap', timeout: 8000});
-        $(document).on('pjax:send', function() {});
+        $(document).on('pjax:start', function() {});
         $(document).on('pjax:complete',   function(e) {
             chickenSoup();
             postEvent();

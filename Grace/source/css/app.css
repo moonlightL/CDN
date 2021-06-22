@@ -1,5 +1,12 @@
 a, abbr, acronym, address, applet, article, aside, audio, b, big, blockquote, body, canvas, caption, center, cite, code, dd, del, details, dfn, div, dl, dt, em, embed, fieldset, figcaption, figure, footer, form, h1, h2, h3, h4, h5, h6, header, hgroup, html, i, iframe, img, ins, kbd, label, legend, li, mark, menu, nav, object, ol, output, p, pre, q, ruby, s, samp, section, small, span, strike, strong, sub, summary, sup, table, tbody, td, tfoot, th, thead, time, tr, tt, u, ul, var, video {margin: 0; padding: 0; border: 0; font-size: 100%; font: inherit; vertical-align: baseline } article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {display: block } body {line-height: 1 } ol, ul {list-style: none } blockquote, q {quotes: none } blockquote:after, blockquote:before, q:after, q:before {content: ''; content: none } table {border-collapse: collapse; border-spacing: 0 }
 
+@font-face {
+    font-family: 'BiaoSong';
+    font-style: normal;
+    font-weight: 400;
+    src: url('../fonts/BiaoSongTiGBK.ttf');
+}
+
 :root {
     --theme-red: #ffb6b9;
     --theme-orange: #fae3d9;
@@ -69,7 +76,7 @@ h6 {
     font-weight: 700;
     line-height: 1.5;
     margin: 1.25rem 0 .9375rem;
-    font-family: "Heiti", sans-serif;
+    font-family: "BiaoSong", sans-serif;
 }
 
 p {
@@ -346,7 +353,8 @@ nav.navBar {
     border-radius: 0;
     z-index: 1500;
     opacity: 0;
-    transition: all .4s
+    transition: all .4s;
+    font-family: "BiaoSong", sans-serif;
 }
 
 nav.navBar:hover {
@@ -661,7 +669,7 @@ nav.navBar.show ul.menu li.current>i {
 
 .header .brand p.title {
     position: relative;
-    font-family: "Heiti", sans-serif;
+    font-family: "BiaoSong", sans-serif;
     font-size: 3.2em;
     line-height: 1.2;
     z-index: 100;
@@ -763,7 +771,8 @@ nav.navBar.show ul.menu li.current>i {
     transition: all .5s;
     overflow: hidden;
     white-space: nowrap;
-    text-overflow: ellipsis
+    text-overflow: ellipsis;
+    text-shadow: none;
 }
 
 .main .sticky-article .info h3 a {
@@ -1378,7 +1387,8 @@ nav.navBar.show ul.menu li.current>i {
     margin-left: 60px;
     font-size: 16px;
     font-weight: 400;
-    line-height: inherit
+    line-height: inherit;
+    font-family: "Microsoft YaHei", sans-serif;
 }
 
 .main .posts-collapse .post-title a {
@@ -1402,6 +1412,7 @@ nav.navBar.show ul.menu li.current>i {
     position: relative;
     border-radius: .625rem;
     margin: 2rem 0;
+    font-family: "BiaoSong", sans-serif;
 }
 
 .main .category .cover {
@@ -2340,6 +2351,7 @@ nav.navBar.show ul.menu li.current>i {
     position: relative;
     padding: 2rem 1rem;
     width: 100%;
+    font-family: "BiaoSong", sans-serif;
 }
 
 .main .sidebar .menu-panel ul {
@@ -2557,7 +2569,7 @@ nav.navBar.show ul.menu li.current>i {
 
 .main .comment-panel p {
     font-size: 24px;
-    margin-bottom: 1rem
+    margin-bottom: 1rem;
 }
 
 .twikoo .el-button--primary.is-disabled,
@@ -2651,7 +2663,8 @@ nav.navBar.show ul.menu li.current>i {
 .main .friend-link h3.link-title {
     position: relative;
     font-size: 18px;
-    font-weight: 400
+    font-weight: 400;
+    font-family: "BiaoSong", sans-serif;
 }
 
 .main .friend-link h3::after {
