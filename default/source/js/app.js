@@ -7,10 +7,13 @@
                 js: baseLink + "/source/js/APlayer/APlayer.min.js"
             },
             about: {
-                js: baseLink + "/source/js/about.js"
+                js: baseLink + "/source/js/about.js?v=" + version
             },
             detail: {
-                js: baseLink + "/source/js/detail.js"
+                js: baseLink + "/source/js/detail.js?v=" + version
+            },
+            dynamic: {
+                js: baseLink + "/source/js/dynamic.js?v=" + version
             },
             highlight: {
                 js: baseLink + "/source/js/highlightjs/highlight.pack.js"
@@ -119,7 +122,7 @@
                             container: $aplayer.get(0),
                             fixed: true,
                             listFolded: true,
-                            listMaxHeight: 90,
+                            listMaxHeight: "120px",
                             autoplay: true,
                             audio: resp.data
                         });
@@ -254,6 +257,15 @@
         }
     };
 
+    const dynamicEvent = function() {
+        let $dynamic = $("#dynamic-content");
+        if ($dynamic.length > 0) {
+            $.getScript(APP.plugins.dynamic.js, function () {
+                initComment();
+            });
+        }
+    };
+
     const pjaxEvent = function() {
         $(document).pjax('a[data-pjax]', '#wrap', {fragment: '#wrap', timeout: 8000});
         $(document).on('pjax:send', function() { NProgress.start();});
@@ -263,6 +275,7 @@
             contentWayPoint();
             postEvent();
             aboutEvent();
+            dynamicEvent();
             let $navBar = $("#navbar");
             let $arr = $navBar.find("ul.menu>li");
             $arr.removeClass("active");
@@ -281,6 +294,7 @@
         contentWayPoint();
         postEvent();
         aboutEvent();
+        dynamicEvent();
         if (openPjax === "true") {
             pjaxEvent();
         }
