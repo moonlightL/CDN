@@ -6,15 +6,6 @@
                 css: baseLink + "/source/js/APlayer/APlayer.min.css",
                 js: baseLink + "/source/js/APlayer/APlayer.min.js"
             },
-            about: {
-                js: baseLink + "/source/js/about.js?v=" + version
-            },
-            detail: {
-                js: baseLink + "/source/js/detail.js?v=" + version
-            },
-            dynamic: {
-                js: baseLink + "/source/js/dynamic.js?v=" + version
-            },
             highlight: {
                 js: baseLink + "/source/js/highlightjs/highlight.pack.js"
             },
@@ -185,8 +176,8 @@
     };
 
     const postEvent = function() {
-        let $detailComment = $("#detail-comment");
-        if ($detailComment.length > 0) {
+        let $detail = $("#post-content");
+        if ($detail.length > 0) {
             $.getScript(APP.plugins.highlight.js, function () {
                 document.querySelectorAll('figure span').forEach((block) => {
                     hljs.highlightBlock(block);
@@ -203,7 +194,9 @@
 
             // 点赞
             $("#priseBtn").on("click",function () {
-                if (sessionStorage.getItem("hasPrize" + postId)) {
+                let postId = $(this).data("id");
+                let key = "post-hasPrize" + postId;
+                if (sessionStorage.getItem(key)) {
                     layer.msg("已点赞");
                     return;
                 }
@@ -211,7 +204,8 @@
                 $.post("/praisePost/" + postId, null, function (resp) {
                     if (resp.success) {
                         $("#prizeCount").text(resp.data);
-                        sessionStorage.setItem("hasPrize" + postId, "y");
+                        sessionStorage.setItem(key, "y");
+                        layer.msg("谢谢点赞");
                     }
                 },"json");
 
@@ -240,28 +234,30 @@
                     }
                 });
             });
-
-            $.getScript(APP.plugins.detail.js, function () {
-                initComment(window.postId, window.canComment);
-            });
-
-        }
-    };
-
-    const aboutEvent = function() {
-        let $about = $("#about-comment");
-        if ($about.length > 0) {
-            $.getScript(APP.plugins.about.js, function () {
-                initComment();
-            });
         }
     };
 
     const dynamicEvent = function() {
         let $dynamic = $("#dynamic-content");
         if ($dynamic.length > 0) {
-            $.getScript(APP.plugins.dynamic.js, function () {
-                initComment();
+            $(".praise").off("click").on("click",function () {
+                let that = this;
+                let id = $(this).data("id");
+                let key = "dynamic-hasPrize" + id;
+                if (sessionStorage.getItem(key)) {
+                    layer.msg("已点赞");
+                    return;
+                }
+
+                $.post("/praiseDynamic/" + id, null, function (resp) {
+                    if (resp.success) {
+                        $(that).find(".praise-num").text(resp.data);
+                        $(that).find(".fa").css("color", "red");
+                        sessionStorage.setItem(key, "y");
+                        layer.msg("点赞成功");
+                    }
+                },"json");
+
             });
         }
     };
@@ -270,12 +266,10 @@
         $(document).pjax('a[data-pjax]', '#wrap', {fragment: '#wrap', timeout: 8000});
         $(document).on('pjax:send', function() { NProgress.start();});
         $(document).on('pjax:complete',   function(e) {
-            loadLazy();
             circleMagic();
             contentWayPoint();
-            postEvent();
-            aboutEvent();
             dynamicEvent();
+            postEvent();
             let $navBar = $("#navbar");
             let $arr = $navBar.find("ul.menu>li");
             $arr.removeClass("active");
@@ -292,9 +286,8 @@
         circleMagic();
         loadLazy();
         contentWayPoint();
-        postEvent();
-        aboutEvent();
         dynamicEvent();
+        postEvent();
         if (openPjax === "true") {
             pjaxEvent();
         }
