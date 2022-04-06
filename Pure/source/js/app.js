@@ -39,8 +39,8 @@
         // $('head').append('<link href="' + APlayer.css + '" rel="stylesheet" type="text/css" />');
         // $.getScript(APlayer.js);
         $.getScript("//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js");
-        // $("body").css("cursor", "url('" + baseLink + "/source/images/normal.cur'), default");
-        // $("a").css("cursor", "url('" + baseLink + "/source/images/link.cur'), pointer");
+        $("body").css("cursor", "url('" + baseLink + "/source/images/normal.cur'), default");
+        $("a").css("cursor", "url('" + baseLink + "/source/images/link.cur'), pointer");
     };
 
     let CURRENT_MODE = "current_mode";
@@ -54,8 +54,10 @@
 
         if (mode === "light") {
             $("#modeBtn").html('<i class="fa fa-moon-o"></i>');
+            $("#nightMode").prop("checked", false);
         } else {
             $("#modeBtn").html('<i class="fa fa-sun-o"></i>');
+            $("#nightMode").prop("checked", true);
         }
     };
 
@@ -91,19 +93,6 @@
             $('#modal-iframe').iziModal('open');
         });
 
-        // change mode
-        $("#changeMode").off("click").on("click", function () {
-            let $html = $("html");
-            let mode = ($html.attr("mode") === "light" ? "dark" : "light");
-            sessionStorage.setItem(CURRENT_MODE, mode);
-            $html.attr("mode", mode);
-            if (mode === "light") {
-                $(this).html('<i class="fa fa-adjust"></i> <span>夜间</span>');
-            } else {
-                $(this).html('<i class="fa fa-adjust"></i> <span>白昼</span>');
-            }
-        });
-
         // to top
         let toTop = $('<a href="javascript:void(0)" id="toTop" class="to-top"> <i class="fa fa-angle-double-up"></i> <span>回到顶部</span> </a>');
         $body.append(toTop);
@@ -115,39 +104,75 @@
         });
 
         $("#toolBtn").off("click").on("click", function() {
-           let $menuToolPanel = $("#menuToolPanel");
-           if ($menuToolPanel.hasClass("show")) {
-               $menuToolPanel.removeClass("show");
-           } else {
-               $menuToolPanel.addClass("show");
-           }
+            let $menuToolPanel = $("#menuToolPanel");
+            if ($menuToolPanel.hasClass("show")) {
+                $menuToolPanel.removeClass("show");
+            } else {
+                $menuToolPanel.addClass("show");
+            }
         });
     };
 
 
     let GLASS_THEME = "glass_theme";
     let TEXT_SHADOW = "text_shadow";
+    let BG_IMG = "bg_img";
     const toolPanelEvent = function() {
+        let $body = $("body");
+        let bgImg = localStorage.getItem(BG_IMG);
+        if (bgImg) {
+            $body.css({"background": "url('" + baseLink + "/source/images/" + bgImg + "') no-repeat center center fixed"});
+        }
+
+        $(".shot-img").off("click").on("click", function() {
+            let url = $(this).data("url");
+            if (url) {
+                $body.css({"background": "url('" + baseLink + "/source/images/" + url + "') no-repeat center center fixed"});
+            } else {
+                $body.css({"background": "var(--background-color)"});
+            }
+
+            localStorage.setItem(BG_IMG, url);
+        });
+
+        let $nightMode = $("#nightMode");
+        $nightMode.off("click").on("click", function () {
+            let checked = $(this).prop("checked");
+            let mode = checked ? "dark" : "light";
+            $("html").attr("mode", mode);
+            sessionStorage.setItem(CURRENT_MODE, mode);
+        });
+
         let isGlassTheme = localStorage.getItem(GLASS_THEME);
         let $glassTheme = $("#glassTheme");
-        if (isGlassTheme === "true") {
-            $("#appCss").attr("href", baseLink + "/source/css/app_Glass.css?v=" + version);
-            $glassTheme.prop("checked", true);
+        if (scheme === "Material") {
+            if (isGlassTheme === "true") {
+                $glassTheme.prop("checked", true);
+                $("#appCss").attr("href", prefix + "/source/css/app_Glass.css?v=" + version);
+            }
+        } else if (scheme === "Glass") {
+            if (isGlassTheme === "true") {
+                $glassTheme.prop("checked", true);
+            } else {
+                $glassTheme.prop("checked", false);
+                $("#appCss").attr("href", prefix + "/source/css/app_Material.css?v=" + version);
+            }
         }
 
         $glassTheme.off("click").on("click", function() {
             let checked = $(this).prop("checked");
             if (checked) {
-                $("#appCss").attr("href", baseLink + "/source/css/app_Glass.css?v=" + version);
+                $("#appCss").attr("href", prefix + "/source/css/app_Glass.css?v=" + version);
                 localStorage.setItem(GLASS_THEME, "true");
             } else {
-                $("#appCss").attr("href", baseLink + "/source/css/app_Material.css?v=" + version);
+                $("#appCss").attr("href", prefix + "/source/css/app_Material.css?v=" + version);
                 localStorage.removeItem(GLASS_THEME);
+                $body.css({"background": "var(--background-color)"});
+                localStorage.removeItem(BG_IMG);
             }
         });
 
         let isTextShadow = localStorage.getItem(TEXT_SHADOW);
-        let $body = $("body");
         let $textShadow = $("#textShadow");
         if (isTextShadow === "false") {
             $body.css({"textShadow": "none"});
@@ -281,6 +306,31 @@
         });
     };
 
+    const dynamicEvent = function() {
+        let $dynamic = $("#dynamicList");
+        if ($dynamic.length > 0) {
+            $(".praise").off("click").on("click",function () {
+                let that = this;
+                let id = $(this).data("id");
+                let key = "dynamic-hasPrize" + id;
+                if (sessionStorage.getItem(key)) {
+                    layer.msg("已点赞");
+                    return;
+                }
+
+                $.post("/praiseDynamic/" + id, null, function (resp) {
+                    if (resp.success) {
+                        $(that).find(".praise-num").text(resp.data);
+                        $(that).find(".fa").css("color", "red");
+                        sessionStorage.setItem(key, "y");
+                        layer.msg("点赞成功");
+                    }
+                },"json");
+
+            });
+        }
+    };
+
     const postEvent = function() {
         let $postDetail = $(".post-detail");
         if ($postDetail.length > 0) {
@@ -322,8 +372,9 @@
 
     const pjaxEvent = function() {
         $(document).pjax('a[data-pjax]', '#main', {fragment: '#main', timeout: 8000});
-        $(document).on('pjax:send', function() {NProgress.start(); });
+        $(document).on('pjax:start', function() {NProgress.start(); });
         $(document).on('pjax:complete',   function(e) {
+            dynamicEvent();
             postEvent();
             pushEvent();
 
@@ -357,6 +408,7 @@
         loadLazy();
         contentWayPoint();
         copyInfoEvent();
+        dynamicEvent();
         postEvent();
         pjaxEvent();
         pushEvent();

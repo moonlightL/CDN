@@ -441,7 +441,8 @@ nav.navBar ul.menu li>ul.second-menu li:first-child a {
 nav.navBar ul.menu li>ul.second-menu li {
     display: block;
     margin-right: 0;
-    border-radius: .625rem 0
+    border-radius: .625rem 0;
+    height: 42px;
 }
 
 nav.navBar ul.menu li>ul.second-menu li:hover a {
@@ -566,7 +567,8 @@ nav.navBar.show ul.menu li.current>i {
         background: #fff;
         z-index: 1502;
         padding: 1.25rem;
-        transition: all .5s
+        transition: all .5s;
+        overflow: auto;
     }
     .tiny-menu>ul {
         display: block!important;
@@ -940,6 +942,7 @@ nav.navBar.show ul.menu li.current>i {
     overflow: hidden;
     white-space: nowrap;
     clear: both;
+    padding-left: 2px;
 }
 
 .main .post-article .info h3 a:hover {
@@ -1634,6 +1637,7 @@ nav.navBar.show ul.menu li.current>i {
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+    padding-left: 2px;
 }
 
 @media (max-width:992px) {
@@ -1651,7 +1655,8 @@ nav.navBar.show ul.menu li.current>i {
 .main .posts-article .info .summary {
     overflow: hidden;
     text-overflow: ellipsis;
-    max-height: 6rem
+    max-height: 6rem;
+    padding-left: 2px;
 }
 
 .main .post-first {
@@ -1775,7 +1780,7 @@ nav.navBar.show ul.menu li.current>i {
 
 .main .post-content a:not(.fancybox)::before {
     position: absolute;
-    content: "🚀";
+    content: "馃殌";
     top: 0;
     left: -26px;
     width: 32px;
@@ -2058,8 +2063,8 @@ nav.navBar.show ul.menu li.current>i {
 }
 
 .main .post-praise button {
-    width: 64px;
-    height: 64px;
+    width: 70px;
+    height: 70px;
     border: 0;
     background: var(--red-color);
     color: #FFF;
@@ -2075,13 +2080,21 @@ nav.navBar.show ul.menu li.current>i {
     box-shadow: 0 1px 20px -4px var(--red-color);
 }
 
+.main .post-share {
+    margin-bottom: 1rem;
+}
+
+.main .post-share .help p {
+    font-size: 12px !important;
+}
+
 .main .post-copyright {
     position: relative;
     padding: 1rem;
     border-left: 2px solid #888;
     border-radius: .625rem;
     background: var(--panel-color);
-    color: var(--text-color)
+    color: var(--text-color);
 }
 
 .main .post-copyright ul li:before {
@@ -2238,6 +2251,7 @@ nav.navBar.show ul.menu li.current>i {
     margin: 10px 0;
     font-size: 22px;
     line-height: 2rem;
+    text-shadow: none;
 }
 
 .main .post-other-info .post-item a:hover,
@@ -2778,12 +2792,291 @@ nav.navBar.show ul.menu li.current>i {
 
 .links .item .info p {
     font-size: .75em;
-    margin: .2rem 0
+    margin: .2rem 0;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
 }
 
 .links .item svg {
     width: 64px;
     height: 64px;
+}
+
+.main .dynamic-list {
+    position: relative;
+    padding-left: 1.5rem;
+}
+
+.main .dynamic-list::after {
+    content: " ";
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin-left: -2px;
+    width: 4px;
+    height: 100%;
+    background: var(--border-color);
+    z-index: -1;
+    transition: opacity .2s;
+}
+
+.main .dynamic-list .dynamic-item {
+    position: relative;
+    box-shadow: 0 1px 18px -6px var(--shadow-color);
+    margin-bottom: 1rem;
+    border-radius: .5rem;
+    --bg-color: var(--block-color, #666);
+    transition: all .2s;
+    opacity: 0;
+}
+
+.main .dynamic-list .dynamic-item:hover {
+    box-shadow: 0 1px 24px -2px var(--shadow-color);
+}
+
+.main .dynamic-list .dynamic-item::before {
+    content: " ";
+    position: absolute;
+    left: -24px;
+    top: 26px;
+    width: 14px;
+    height: 14px;
+    margin-left: -7px;
+    background: var(--background-color);
+    border-radius: 50%;
+    border: 2px solid var(--bg-color);
+    transition: opacity .2s, slowDown .4s;
+}
+
+.main .dynamic-list .dynamic-item .info {
+    position: relative;
+    padding: 2rem 2rem 1rem 2rem;
+    border-radius: 4px 4px 0 0;
+    border-bottom: 1px dashed var(--border-color);
+    font-family: "BiaoSong", sans-serif;
+}
+
+.main .dynamic-list .dynamic-item .info::before {
+    content: "";
+    position: absolute;
+    top: 32px;
+    left: 0;
+    margin-left: -20px;
+    border-width: 10px;
+    border-style: solid;
+    border-color: transparent transparent var(--background-color) transparent;
+    transform: translateY(-50%) rotate(-90deg);
+    transition: ease-in-out .2s;
+}
+
+.main .dynamic-list .dynamic-item .info .content {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.main .dynamic-list .dynamic-item .info .content a {
+    color: #0d95e8;
+}
+
+.main .dynamic-list .dynamic-item .info .content a:hover {
+    color: #35acf5;
+    text-decoration: underline;
+}
+
+.main .dynamic-list .dynamic-item .info .content img.custom-img,
+.main .dynamic-list .dynamic-item .info .content video,
+.main .dynamic-list .dynamic-item .info .content iframe {
+    max-width: 720px !important;
+    max-height: 368px !important;
+    object-fit: cover;
+}
+
+@media (max-width:767px) {
+    .main .dynamic-list .dynamic-item .info .content img.custom-img {
+        width: 100% !important;
+        height: 146px;
+    }
+
+    .main .dynamic-list .dynamic-item .info .content video {
+        width: 270px;
+        height: 146px;
+    }
+
+    .main .dynamic-list .dynamic-item .info .content iframe {
+        width: 270px;
+    }
+}
+
+.main .dynamic-list .dynamic-item .meta {
+    font-size: 14px;
+    padding: .5rem 2rem;
+    border-radius: 0 0 4px 4px;
+}
+
+.main .dynamic-list .dynamic-item .meta span {
+    display: inline-block;
+}
+
+.main .dynamic-list .dynamic-item .meta a.praise {
+    float: right;
+    color: var(--text-color);
+}
+
+.main .album {
+    position: relative;
+    border-radius: .625rem;
+    margin: 2rem 0;
+    font-family: "BiaoSong", sans-serif;
+}
+
+.main .album .cover {
+    position: relative;
+    width: 100%;
+    height: 225px;
+    object-fit: cover;
+    border-radius: .625rem;
+    font-size: 1em;
+    overflow: hidden;
+    transform: rotateY(0);
+    transition: all .5s;
+}
+
+.main .album .cover:hover {
+    box-shadow: 0 1px 20px -1px var(--shadow-color);
+}
+
+.main .album .cover img {
+    width: 100%;
+    height: 225px;
+    object-fit: cover
+}
+
+.main .album .cover .name {
+    position: absolute;
+    width: 100%;
+    background: rgba(0, 0, 0, .8);
+    color: #fff;
+    padding: .5rem 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 0;
+    text-align: center;
+    font-size: 24px
+}
+
+.main .album-detail-item {
+    position: relative;
+    margin: 1.5rem 1rem;
+    background-color: #eee;
+    height: 100%;
+    opacity: 0;
+}
+
+.main .album-detail-item.image {
+    padding: .5rem .5rem 0 .5rem;
+}
+
+.main .album-detail-item:hover {
+    box-shadow: 0 1px 20px -1px var(--shadow-color);
+}
+
+.main .album-detail-item a .mask {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: rgba(0 ,0, 0, .6);
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: all .5s;
+}
+
+.main .album-detail-item a img {
+    width: 100%;
+    height:150px;
+    object-fit: cover;
+}
+
+.main .album-detail-item.video a img {
+    width: 100%;
+    height:200px;
+    object-fit: cover;
+}
+
+.main .album-detail-item.video .video-btn {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-image: url("../images/video-btn.png");
+    width: 97px;
+    height: 97px;
+    border-radius: 50%;
+    z-index: 1000;
+}
+
+.main .album-detail-item.video .video-btn:hover {
+    box-shadow: 0 2px 10px #eee;
+}
+
+.main .album-detail-item a:hover .mask {
+    opacity: 1;
+}
+
+.main .album-detail-item a .mask i {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.wrap .video-mask {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(0, 0, 0, .7);
+    z-index: 10002;
+}
+
+.wrap .video-self {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 620px;
+    height: 340px;
+    z-index: 1001;
+}
+
+@media (max-width:767px) {
+    .wrap .video-self {
+        width: 360px;
+        height: 300px;
+    }
+}
+
+.wrap .video-close {
+    position: absolute;
+    width: 44px;
+    height: 44px;
+    top: 0;
+    right: 0;
+    z-index: 1000;
+    cursor: pointer;
+    color: #ccc;
+    font-size: 22px;
+    background: rgba(0,0,0,.8);
+    text-align: center;
+    line-height: 44px;
+}
+
+.wrap .video-close:hover {
+  color: #fff;
 }
 
 .main .about-detail,
@@ -2904,7 +3197,8 @@ nav.navBar.show ul.menu li.current>i {
 }
 
 .aplayer.show {
-    opacity: 1!important
+    opacity: 1!important;
+    text-shadow: none;
 }
 
 #nprogress .spinner {
@@ -3105,4 +3399,71 @@ button.run-code:hover {
     display: block;
     text-align: center;
     margin: 1.5rem auto;
+}
+
+/**评论区**/
+.hb-comment .hb-w-body{
+    box-shadow: 0 1px 20px -10px var(--shadow-color);
+    padding: 2rem;
+}
+
+.hb-comment ul li::before {
+    display: none;
+}
+
+.hb-comment .hb-w-body .hb-w-body-item,
+.hb-comment .hb-r-body .hb-r-body-item {
+    margin: 0;
+    padding-bottom: 0;
+    border-bottom: 0;
+}
+
+.hb-comment .hb-w-body .hb-comment-help button {
+    padding: 0.2rem 0.75rem;
+}
+
+.hb-comment .hb-r-body .hb-r-body-item {
+    margin: 1rem 0;
+    box-shadow: 0 1px 20px -10px var(--shadow-color);
+    padding: 2rem;
+}
+
+.hb-comment .hb-r-body .hb-r-body-item .extras {
+    font-size: 13px;
+}
+
+.hb-comment .hb-r-body .hb-r-pagination ul li a,
+.hb-comment .hb-r-body .hb-r-pagination ul li.active a,
+.hb-comment .hb-r-body .hb-r-pagination ul li a:hover {
+    padding: 0;
+}
+
+html[mode=dark] .hb-comment {
+    color: #aaa;
+}
+
+html[mode=dark] .hb-w-body .hb-comment-info .label {
+    color: #aaa;
+    background: #000;
+    border: 1px solid #4a4a4a;
+}
+
+html[mode=dark] .hb-w-body .hb-comment-info input[readonly='readonly'] {
+    background: #a1a1a1;
+    color: #000;
+}
+
+html[mode=dark] .hb-w-body .hb-comment-content textarea {
+    border: 1px solid #4a4a4a;
+    background: #363535;
+}
+
+html[mode=dark] .hb-w-body .hb-comment-info input {
+    border: 1px solid #4a4a4a;
+    background: #363535;
+}
+
+html[mode=dark] .hb-r-body .hb-r-pagination ul li {
+    background-color: #000;
+    border: 1px solid #4a4a4a;
 }

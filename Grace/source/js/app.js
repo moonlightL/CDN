@@ -15,6 +15,9 @@
             lazyLoad: {
                 js: baseLink + "/source/js/jquery.lazyload.min.js"
             },
+            share: {
+                js: baseLink + "/source/js/overshare/js/social-share.min.js"
+            },
             toc: {
                 js: baseLink + "/source/js/toc.js"
             },
@@ -336,6 +339,10 @@
         });
     };
 
+    const shareCodeEvent = function() {
+        $.getScript(APP.plugins.share.js);
+    };
+
     const runCodeEvent = function() {
         $(".run-code").on("click", function() {
             let $btn = $(this);
@@ -343,11 +350,36 @@
             html = html.replace(/<br>/g, "\r\n");
             let codeContent = $(html).text();
             let childWin = window.open("", "_blank", "");
-            childWin.document.open("text/html", "replace");
             childWin.opener = null;
+            childWin.document.open("text/html", "replace");
             childWin.document.write(codeContent);
-            childWin.document.close()
+            childWin.document.close();
         });
+    };
+
+    const dynamicEvent = function() {
+        let $dynamic = $("#dynamicList");
+        if ($dynamic.length > 0) {
+            $(".praise").off("click").on("click",function () {
+                let that = this;
+                let id = $(this).data("id");
+                let key = "dynamic-hasPrize" + id;
+                if (sessionStorage.getItem(key)) {
+                    layer.msg("已点赞");
+                    return;
+                }
+
+                $.post("/praiseDynamic/" + id, null, function (resp) {
+                    if (resp.success) {
+                        $(that).find(".praise-num").text(resp.data);
+                        $(that).find(".fa").css("color", "red");
+                        sessionStorage.setItem(key, "y");
+                        layer.msg("点赞成功");
+                    }
+                },"json");
+
+            });
+        }
     };
 
     const postEvent = function() {
@@ -384,6 +416,7 @@
             rewardEvent();
             praiseEvent();
             copyCodeEvent();
+            shareCodeEvent();
             runCodeEvent();
         }
     };
@@ -393,6 +426,7 @@
         $(document).on('pjax:start', function() {});
         $(document).on('pjax:complete',   function(e) {
             chickenSoup();
+            dynamicEvent();
             postEvent();
             $.getScript("//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js");
             pushEvent();
@@ -445,7 +479,13 @@
     };
 
     function calcProcess(winTop, docHeight, winHeight, line, left, right) {
-        let scrolled =  (winTop / (docHeight - winHeight)) * 100;
+        let scrolled;
+        let denominator = docHeight - winHeight;
+        if (denominator > 0) {
+            scrolled =  (winTop / denominator) * 100;
+        } else {
+            scrolled = 100;
+        }
         line.css('width', scrolled + '%');
         $("#progress-value").html(parseInt(scrolled + "") + '%');
         let num = scrolled * 3.6;
@@ -477,6 +517,7 @@
         contentWayPoint();
         searchEvent();
         copyInfoEvent();
+        dynamicEvent();
         postEvent();
         pjaxEvent();
         loadResource();
